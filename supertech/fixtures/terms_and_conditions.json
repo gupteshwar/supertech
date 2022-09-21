@@ -1,0 +1,62 @@
+[
+ {
+  "buying": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Terms and Conditions",
+  "hr": 1,
+  "modified": "2022-04-07 21:19:39.157153",
+  "name": "Purchase Terms & Conditions",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "selling": 0,
+  "terms": "<div class=\"ql-editor read-mode\"><p style=\"text-align: center;\"><strong><u>Supertech Fabrics Pvt. Ltd.: Terms And Conditions</u></strong></p><p><br></p><p>1) Please confirm the receipt and acceptance of this Purchase Order in writing within 3 days of receipt, failing which it will be deemed to be accepted by you.</p><p><br></p><p>2) Please quote our Purchase Order number mentioned above in all the documents / correspondence pertaining to this Purchase Order.</p><p><br></p><p>3) Receipt of Goods does not constitute acceptance thereof by us. Goods will be deemed to have been accepted only after the approval by our Quality Assurance Department.</p><p><br></p><p>4) All materials shall in every respect must match agreed description &amp; specifications. Materials shall be subjected to our inspection &amp; approval &amp; if rejected shall be held at suppliers risk. Removal of rejected material &amp; replacement of the material should be entirely at the suppliers expenses. Return of the funds to be immediately processed by the supplier in case replacement is not asked for.</p><p><br></p><p>5) Goods delivered without Certificate of Analysis will not be accepted, Penalty of Rs. 2500/- will be levied on you.</p><p><br></p><p>6) Shipment should be within 3 months from the date of manufacturer Minimum of 90% of the total shelf life declared by manufacturer should be available at the time of delivery.</p><p><br></p><p>7) Documents / information to be attached / provided on dispatch (Date of Manufacture, Expiry date, Lot number, Batch No., Mfg. Licence No., Method of Analysis, MSDS, packing specifications, Gross weight, Net weight).</p><p><br></p><p>8) If the date of delivery as stated in the order is required to be changed it must be done in writing immediately on receipt of the order.</p><p><br></p><p>9) 5% for RM variation in quantity is allowed. However this is at the discretion of SCIPL. Quantity in excess of 10 % &amp; 5% summarily rejected.</p><p><br></p><p>10) Supertech Fabrics shall be at liberty to make all statutory deductions at source as are in force at the time, in payment and issue necessary certificates in respect thereof.</p><p><br></p><p>11) Subject to Vadodara Jurisdiction.</p><p><br></p><p>12) We reserve the right to cancel this Purchase Order or any part thereof if delivery is not made within the agreed time as mentioned therein in which case we may Purchase from elsewhere the undelivered quantity of goods charging the supplier with the extra cost if any.</p><p><br></p><p>13) Supertech Fabrics reserves the right at any time to make changes in drawings or specifications of the material and or work covered by this Purchase Order and in such event if increase or decrease is caused in the cost of production, the price mentioned of this Purchase Order shall be equitably adjusted.</p><p><br></p><p>14) All items manufactured by the supplier according to our blueprints, drawings/designs/manufacturing data/specification or information pertaining to therein furnished to the supplier by us shall not be utilised by the supplier or anyone on his behalf for sale, manufacture or for any other purpose save as agreed by us in writing.&nbsp;</p><p><br></p><p>15) Freight and all other charges resulting on account of replacement of goods will be borne by the supplier. If this is not done, the said amount will be deducted from supplier's invoices.</p><p><br></p><p>16) Tax invoice/Bill of Supply / Revised Invoice / Debit / Credit note or Supplementary Invoice should be in the name of buyer address with buyer GSTIN No. / ISD GSTIN No. as per PO.</p><p><br></p><p>17) Kindly mention our Buyer Location GSTIN No. / ISD / CREDIT NOTE GSTIN No. / STATE CODE / STATE NAME on the Tax Invoice / Bill of Supply / Revised Invoice / Supplementary Invoice or Debit/Credit Note. If you fail to do so then the SGST / CGST / IGST or UTGST amount will be recovered from you. The Tax Invoice / Revised Invoice / Debit Note / Credit Note or Supplementary Invoice is required to be uploaded on the GSTN Network by the vendor and the GST TAX there on should be paid into the Govt. treasury within the statutory timelines stipulated by CGST/SGST/IGST/UTGST ACT or other wise the GST TAX (SGST/CGST/IGST/UTGST) charged by the Vendor would be recovered with interest from the vendor's future invoices.</p><p><br></p><p>18) In case if Taxable Goods \"Original for Buyer\" &amp; \"Duplicate for Transporter \" have to be received by us along with the material.</p><p><br></p><p>19) Irrespective of the credit terms, SCIPL reserves the right to pay the GST ( SGST / UTGST/CGST / IGST) to vendor on receiving the credit of the GST paid by the vendor over the GSTN network.</p></div>",
+  "title": "Purchase Terms & Conditions"
+ },
+ {
+  "buying": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Terms and Conditions",
+  "hr": 1,
+  "modified": "2022-04-14 14:13:16.575268",
+  "name": "STF-Purchase T&C. 01",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "selling": 1,
+  "terms": "<div class=\"ql-editor read-mode\"><p>Delivery Period&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: Within 1 weeks from your Purchase Order</p><p>Payment Terms&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 30 Days</p><p>Packing &amp; Forwarding&nbsp;&nbsp;: Inclusive.</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Pack properly to avoid damage during transit</p><p>Test Certificate&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: Required</p></div>",
+  "title": "STF-Purchase T&C. 01"
+ },
+ {
+  "buying": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Terms and Conditions",
+  "hr": 1,
+  "modified": "2022-04-14 14:17:08.929323",
+  "name": "STF-Purchase Del : 01 Week & Payment : 30days",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "selling": 1,
+  "terms": "<div class=\"ql-editor read-mode\"><p>Delivery Period &nbsp; &nbsp;: Within 1 weeks from your Purchase Order</p><p>Payment Terms &nbsp; &nbsp;\t: 30 Days</p><p>Packing &amp; Forwarding &nbsp;: Inclusive - Pack properly to avoid Transit Damage</p><p>Freight &nbsp; &nbsp; &nbsp; &nbsp;: Extra</p><p>Test Certificate &nbsp; &nbsp;\t: Required</p></div>",
+  "title": "STF-Purchase Del : 01 Week & Payment : 30days"
+ },
+ {
+  "buying": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Terms and Conditions",
+  "hr": 0,
+  "modified": "2022-05-26 10:48:43.873740",
+  "name": "Purchase Del : 01 Week & 60 Days Credit",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "selling": 0,
+  "terms": "<div class=\"ql-editor read-mode\"><p>Delivery Period&nbsp;&nbsp;: Within 1 weeks from your Purchase Order</p><p>Payment Terms&nbsp;&nbsp;: 60 Days</p><p>Packing &amp; Forwarding&nbsp;: Inclusive - Pack properly to avoid Transit Damage</p><p>Freight&nbsp;&nbsp;&nbsp;&nbsp;: Extra</p><p>Test Certificate&nbsp;&nbsp;: Required</p></div>",
+  "title": "Purchase Del : 01 Week & 60 Days Credit"
+ }
+]

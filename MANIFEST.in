@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include supertech *.css
+recursive-include supertech *.csv
+recursive-include supertech *.html
+recursive-include supertech *.ico
+recursive-include supertech *.js
+recursive-include supertech *.json
+recursive-include supertech *.md
+recursive-include supertech *.png
+recursive-include supertech *.py
+recursive-include supertech *.svg
+recursive-include supertech *.txt
+recursive-exclude supertech *.pyc

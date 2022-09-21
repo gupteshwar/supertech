@@ -1,0 +1,41 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Quotation",
+  "enabled": 1,
+  "modified": "2022-08-30 09:55:09.627535",
+  "name": "Quotation-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Quotation', {\n    refresh(frm) {\n        // your code here\n    }\n})\n\n\n\n\nfrappe.ui.form.on('Quotation Item', \"item_code\", function(frm, cdt, cdn) {\n    // locals[cdt][cdn]['product']\n\n    var ItemGroup = 0.00\n    var Item = 0.00\n    var Customer = 0.00\n    var TotalCost = 0.00\n    var RMC = 0.00\n\n    var Totalper = 0.00\n    var TotalValue = 0.00\n\n\n    // getting percentage item\n    frappe.call({\n        method: 'frappe.client.get_value',\n        args: {\n            'doctype': 'Item',\n            'filters': {\n                'name': locals[cdt][cdn]['item_code']\n            },\n            'fieldname': [\n                'percentage',\n            ]\n        },\n        async: false,\n        callback: function(r) {\n            if (!r.exc) {\n                // code snippet\n                if (r.message.percentage) {\n                    Item = r.message.percentage\n\n                }\n            }\n        }\n    });\n\n    // getting percentage item item_group\n    frappe.call({\n        method: 'frappe.client.get_value',\n        args: {\n            'doctype': 'Item Group',\n            'filters': {\n                'name': locals[cdt][cdn]['item_group']\n            },\n            'fieldname': [\n                'percentage',\n            ]\n        },\n        async: false,\n        callback: function(r) {\n            if (!r.exc) {\n                // code snippet\n                if (r.message.percentage) {\n                    ItemGroup = r.message.percentage\n\n                }\n            }\n        }\n    });\n\n    // getting percentage item Customer\n    frappe.call({\n        method: 'frappe.client.get_value',\n        args: {\n            'doctype': 'Customer',\n            'filters': {\n                'name': frm.doc.party_name\n            },\n            'fieldname': [\n                'percentage',\n            ]\n        },\n        async: false,\n        callback: function(r) {\n            if (!r.exc) {\n                // code snippet\n                if (r.message.percentage) {\n                    Customer = r.message.percentage\n\n                }\n            }\n        }\n    });\n\n    // getting percentage item Bom\n    frappe.call({\n        method: 'frappe.client.get_value',\n        args: {\n            'doctype': 'BOM',\n            'filters': {\n                'item': locals[cdt][cdn]['item_code'],\n                \"is_default\": 1\n            },\n            'fieldname': [\n                'raw_material_cost',\n                'total_cost',\n                \"quantity\"\n            ]\n        },\n        async: false,\n        callback: function(r) {\n            if (!r.exc) {\n                // code snippet\n                if (r.message.raw_material_cost) {\n                    RMC = r.message.raw_material_cost / r.message.quantity\n\n                }\n                if (r.message.total_cost) {\n                    TotalCost = r.message.total_cost / r.message.quantity\n\n                } else {\n                    frappe.call({\n                        method: 'frappe.client.get_value',\n                        args: {\n                            'doctype': 'Item',\n                            'filters': {\n                                'name': locals[cdt][cdn]['item_code']\n                            },\n                            'fieldname': [\n                                'trading_item_flp',\n                            ]\n                        },\n                        async: false,\n                        callback: function(r) {\n                            if (!r.exc) {\n                                // code snippet\n                                if (r.message.trading_item_flp) {\n                                    TotalCost = r.message.trading_item_flp\n\n                                }\n                            }\n                        }\n                    });\n\n\n                }\n\n            }\n        }\n    });\n\n    if (isNaN(ItemGroup) == false && isNaN(Item) == false && isNaN(Customer) == false && isNaN(TotalCost) == false && isNaN(RMC) == false) {\n        Totalper = ItemGroup + Item + Customer\n\n        TotalValue = (Totalper * TotalCost) / 100\n\n        locals[cdt][cdn]['rmc_'] = RMC.toFixed(2);\n        locals[cdt][cdn]['flp_'] = TotalCost.toFixed(2);\n        locals[cdt][cdn]['ufp_'] = (TotalCost + TotalValue).toFixed(2);\n\n\n\n    } else {\n\n\n    }\n\n\n\n\n    console.log(`______________`)\n    console.log(`ItemGroup : ${ItemGroup}  `)\n    console.log(`Item : ${Item}  `)\n    console.log(`Customer : ${Customer}  `)\n    console.log(`TotalCost : ${TotalCost}  `)\n    console.log(`RMC : ${RMC}  `)\n    console.log(`Totalper : ${Totalper}  `)\n    console.log(`TotalValue : ${TotalValue}  `)\n\n\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Order",
+  "enabled": 1,
+  "modified": "2022-08-30 09:55:20.717400",
+  "name": "Purchase Order-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Purchase Order', {\n    \n\ton_submit(frm) {\n\t\t// your code here\n\t\tlet a =frm.doc.items \n        for (let i in a){\n            const iterator = a[i];\n            // console.log(iterator.item_code)\n            \n            \n            let processing_amount = 0\n            frappe.call({\n                    method: 'frappe.client.get_value',\n                    args: {\n                        'doctype': 'Item',\n                        'filters': {'name': iterator.item_code},\n                        'fieldname': ['processing_amount']\n                     },\n                    async: false,\n                    callback: function(r) {\n                        if (!r.exc) {\n                            // code snippet\n                            processing_amount = r.message.processing_amount\n                            console.log(r.message.processing_amount)\n\n                        }\n                    }\n                });\n            \n            // console.log(po_amount)\n            // console.log(processing_amount)\n            \n            frappe.db.set_value('Item',iterator.item_code, {\n                    po_amount: iterator.rate,\n                    trading_item_flp :iterator.rate + processing_amount\n                }).then(r => {\n                    let doc = r.message;\n                    console.log(doc);\n                })\n\n            \n        }\n\t\t\n\t\t\n\t\t\n\t}\n\t\n\t\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Item",
+  "enabled": 1,
+  "modified": "2022-08-30 09:55:15.075777",
+  "name": "Item-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Item', {\n\tbefore_save(frm) {\n\t\t// your code here\n\t\tfrm.set_value('trading_item_flp',cur_frm.doc.processing_amount + cur_frm.doc.po_amount)\n\t\tfrm.refresh_field('trading_item_flp');\n\t\t\n\t}\n})",
+  "view": "Form"
+ }
+]
