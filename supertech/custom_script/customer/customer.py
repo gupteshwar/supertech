@@ -10,8 +10,9 @@ def calculate_volume(customer):
                              where 
                                 docstatus = 1 and
                                 customer = '{customer}' 
-                                and transaction_date between '{add_to_date(today(), days=-365, as_string=True)}' 
-                                and '{today()}'
+                                and transaction_date 
+                                 between '{add_to_date(today(), days=-365, as_string=True)}' 
+                                 and '{today()}'
                                 """,as_dict=1)
     count=0
     if dd[0]['count'] != None:
@@ -72,3 +73,92 @@ def calculate_volume(customer):
  
    
     return money_in_words(count, 'INR')
+
+
+
+@frappe.whitelist()
+def calculate_profitablitys(customer):
+    dd = frappe.db.sql(f""" select
+                                qi.qty, 
+                                qi.rate, 
+                                qi.rmc_,
+                                qi.rmc_*qi.qty as rm_value,
+                                qi.rmc_*qi.qty as sales_value,
+                                (qi.rmc_*qi.qty) / (qi.rate*qi.qty) as RMC,
+                                (sum(qi.rmc_*qi.qty) / sum(qi.rate*qi.qty))/100 as RMC_total
+                            from 
+                              `tabQuotation Item` qi
+                            
+                            left join `tabQuotation` q on qi.parent = q.name
+                            where q.party_name = '{customer}' and qi.rmc_ != 0 
+                                and  q.transaction_date 
+                                 between '{add_to_date(today(), days=-365, as_string=True)}' 
+                                 and '{today()}'
+                """,as_dict=1)
+    count  = 0
+    if dd[0]['RMC_total'] != None:
+        count = dd[0]['RMC_total']
+
+    if count < 50:
+        frappe.db.set_value('Customer', customer, 'profitablity',10)
+        frappe.db.commit()
+        return 50,count
+
+    elif 50 < count <= 55:
+        frappe.db.set_value('Customer', customer, 'profitablity',9)
+        frappe.db.commit()
+        return 50,count
+
+    elif 55 < count <= 60:
+        frappe.db.set_value('Customer', customer, 'profitablity',8)
+        frappe.db.commit()
+        return 55,count
+
+    elif 60 < count <= 65:
+        frappe.db.set_value('Customer', customer, 'profitablity',7)
+        frappe.db.commit()
+        return 60,count
+
+    elif 65 < count <= 70:
+        frappe.db.set_value('Customer', customer, 'profitablity',5)
+        frappe.db.commit()
+        return 65,count
+
+    elif 70 < count <= 75:
+        frappe.db.set_value('Customer', customer, 'profitablity',3)
+        frappe.db.commit()
+        return 70,count
+
+    elif 75 < count <= 80:
+        frappe.db.set_value('Customer', customer, 'profitablity',2)
+        frappe.db.commit()
+        return 75,count
+
+    elif 80 < count:
+        frappe.db.set_value('Customer', customer, 'profitablity',1)
+        frappe.db.commit()
+        return 80,count
+
+    return dd[0]['RMC_total']
+
+
+
+
+import time
+
+@frappe.whitelist()
+def customer_scoring():
+    customers = frappe.db.get_list('Customer')
+    start = time.time()
+
+    for i in customers:
+        calculate_volume(i.name)
+        calculate_profitablitys(i.name)        
+    # record end time
+    end = time.time()
+    
+    # print the difference between start
+    # and end time in milli. secs
+    print("The time of execution of above program is :",
+        (end-start) * 10**3, "ms")
+    return 'done'
