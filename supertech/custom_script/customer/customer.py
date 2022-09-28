@@ -17,6 +17,7 @@ def calculate_volume(customer):
     count=0
     if dd[0]['count'] != None:
         count = int(dd[0]['count'])
+    # print(money_in_words(count, 'INR'))
 
 # less than 20
     if count < 2000000:
@@ -69,9 +70,6 @@ def calculate_volume(customer):
         frappe.db.commit()
 
         return 10000000,money_in_words(count, 'INR')
-
- 
-   
     return money_in_words(count, 'INR')
 
 
@@ -143,22 +141,169 @@ def calculate_profitablitys(customer):
 
 
 
+@frappe.whitelist()
+def calaculate_payments(customer):
+    dd =frappe.db.sql(f""" 
+            select payment_terms from `tabCustomer` where name = '{customer}'
+         """,as_dict=1)
+    payment = dd[0]['payment_terms']
+
+    if payment ==None or payment == '':
+        frappe.db.set_value('Customer', customer, 'payments',0)
+        frappe.db.commit()
+        return payment
+
+    elif payment =="100% Advance" :
+        frappe.db.set_value('Customer', customer, 'payments',10)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="50% Advance & Balance against Delivery" :
+        frappe.db.set_value('Customer', customer, 'payments',9)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="30% with PO and balance against Dispatch" :
+        frappe.db.set_value('Customer', customer, 'payments',9)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="30% Against Material & 70% within 45 days" :
+        frappe.db.set_value('Customer', customer, 'payments',7)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="7 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',8)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="15 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',7)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="30 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',5)
+        frappe.db.commit()
+        return payment
+        
+    elif payment =="40 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',4)
+        frappe.db.commit()
+        return payment
+
+    elif payment =="45 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',4)
+        frappe.db.commit()
+        return payment
+
+    elif payment =="60 Days after Invoice" :
+        frappe.db.set_value('Customer', customer, 'payments',4)
+        frappe.db.commit()
+        return payment
+
+    else:
+        frappe.db.set_value('Customer', customer, 'payments',0)
+        frappe.db.commit()
+        return payment
+    return 0
+
+
+@frappe.whitelist()
+def calaculate_payments_delay(customer):
+    si_list = frappe.db.sql(f"""  
+                            select
+                                name,
+                                posting_date
+                            from
+                                `tabSales Invoice`
+                            where 
+                                customer = '{customer}' 
+                            and 
+                                status = 'paid'
+                            and 
+                                 posting_date 
+                                 between '{add_to_date(today(), days=-365, as_string=True)}' 
+                                 and '{today()}'
+
+                        """,as_dict=1)
+                        
+    avg = []
+    for i in si_list:
+
+        dd = frappe.db.sql(f"""  
+                            select 
+                            pe.posting_date,
+                            per.due_date
+                            from 
+                            `tabPayment Entry` pe
+                            
+                            left join `tabPayment Entry Reference` per on pe.name = per.parent
+                            
+                            where pe.party = '{customer}' and per.reference_doctype = 'Sales Invoice' 
+                            and per.reference_name = "{i['name']}"
+                            
+                            order by pe.posting_date asc
+                            
+                        """,as_dict=1)
+        diff = dd[-1]['posting_date'] - i['posting_date']
+        avg.append(int(diff.days))
+        
+    delay = 0
+    if sum(avg) != 0:
+        delay= round(sum(avg) / len(avg))
+    else:
+        delay =  0
+
+    if 0 < delay <= 15:
+        frappe.db.set_value('Customer', customer, 'payment_delay',9)
+        frappe.db.commit()
+        return 50,delay
+
+    elif 15 < delay <= 30:
+        frappe.db.set_value('Customer', customer, 'payment_delay',8)
+        frappe.db.commit()
+        return 55,delay
+
+    elif 30 < delay <= 45:
+        frappe.db.set_value('Customer', customer, 'payment_delay',6)
+        frappe.db.commit()
+        return 60,delay
+
+    elif 45 < delay <= 60:
+        frappe.db.set_value('Customer', customer, 'payment_delay',4)
+        frappe.db.commit()
+        return 65,delay
+
+    elif 60 < delay:
+        frappe.db.set_value('Customer', customer, 'payment_delay',1)
+        frappe.db.commit()
+        return 80,delay
+
+    return delay
+
+
 
 import time
 
 @frappe.whitelist()
 def customer_scoring():
     customers = frappe.db.get_list('Customer')
+
+
+    print(len(customers))
     start = time.time()
+    print(start)
 
     for i in customers:
         calculate_volume(i.name)
-        calculate_profitablitys(i.name)        
-    # record end time
+        calculate_profitablitys(i.name)
+        calaculate_payments(i.name)
+        calaculate_payments_delay(i.name)        
+
     end = time.time()
     
-    # print the difference between start
-    # and end time in milli. secs
-    print("The time of execution of above program is :",
-        (end-start) * 10**3, "ms")
-    return 'done'
+
+    # print(f"The time of execution of above program is :{(end-start) * 10**3 }ms")
+    return f"The time of execution of above program is :{(end-start) * 10**3 }ms"
