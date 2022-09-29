@@ -70,6 +70,11 @@ def calculate_volume(customer):
         frappe.db.commit()
 
         return 10000000,money_in_words(count, 'INR')
+    else:
+        frappe.db.set_value('Customer', customer, 'volume',0)
+        frappe.db.commit()
+
+        return 10000000,money_in_words(count, 'INR')
     return money_in_words(count, 'INR')
 
 
@@ -88,7 +93,7 @@ def calculate_profitablitys(customer):
                               `tabQuotation Item` qi
                             
                             left join `tabQuotation` q on qi.parent = q.name
-                            where q.party_name = '{customer}' and qi.rmc_ != 0 
+                            where q.party_name = '{customer}' 
                                 and  q.transaction_date 
                                  between '{add_to_date(today(), days=-365, as_string=True)}' 
                                  and '{today()}'
@@ -136,7 +141,14 @@ def calculate_profitablitys(customer):
         frappe.db.set_value('Customer', customer, 'profitablity',1)
         frappe.db.commit()
         return 80,count
-
+    elif 80 < count:
+        frappe.db.set_value('Customer', customer, 'profitablity',1)
+        frappe.db.commit()
+        return 80,count
+    else:
+        frappe.db.set_value('Customer', customer, 'profitablity',0)
+        frappe.db.commit()
+        return 80,count
     return dd[0]['RMC_total']
 
 
@@ -281,9 +293,25 @@ def calaculate_payments_delay(customer):
         frappe.db.commit()
         return 80,delay
 
+    else:
+        frappe.db.set_value('Customer', customer, 'payment_delay',0)
+        frappe.db.commit()
+        return 80,delay
+
     return delay
 
 
+@frappe.whitelist()
+def calaculate_overall_score(customer): 
+    i = frappe.get_doc('Customer',customer)
+
+    relationship= 0 if i.relationship == None else i.relationship
+    loyalty = 0 if i.loyalty == None else i.loyalty
+
+
+    score = i.profitablity + i.volume + i.payments + i.payment_delay + relationship + loyalty
+    frappe.db.set_value('Customer', customer, 'customer_score',score*2)
+    frappe.db.commit()     
 
 import time
 
@@ -291,16 +319,15 @@ import time
 def customer_scoring():
     customers = frappe.db.get_list('Customer')
 
-
-    print(len(customers))
     start = time.time()
-    print(start)
 
     for i in customers:
         calculate_volume(i.name)
         calculate_profitablitys(i.name)
         calaculate_payments(i.name)
-        calaculate_payments_delay(i.name)        
+        calaculate_payments_delay(i.name)
+        calaculate_overall_score(i.name)
+  
 
     end = time.time()
     

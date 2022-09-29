@@ -107,23 +107,34 @@ fixtures = ['Custom Field','Notification','Client Script','Webhook','Property Se
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-#	"all": [
-#		"supertech.tasks.all"
-#	],
-#	"daily": [
-#		"supertech.tasks.daily"
-#	],
-#	"hourly": [
-#		"supertech.tasks.hourly"
-#	],
-#	"weekly": [
-#		"supertech.tasks.weekly"
-#	]
-#	"monthly": [
-#		"supertech.tasks.monthly"
-#	]
-# }
+scheduler_events = {
+	"cron": {
+        "0 9 * * *": [
+            "supertech.custom_script.customer.customer.customer_scoring"
+        ],
+        "30 12 * * *": [
+            "supertech.custom_script.customer.customer.customer_scoring"
+        ],
+        "0 17 * * *": [
+            "supertech.custom_script.customer.customer.customer_scoring"
+        ]
+    }
+	# "all": [
+	# 	"supertech.tasks.all"
+	# ],
+	# "daily": [
+	# 	"supertech.tasks.daily"
+	# ],
+	# "hourly": [
+	# 	"supertech.tasks.hourly"
+	# ],
+	# "weekly": [
+	# 	"supertech.tasks.weekly"
+	# ],
+	# "monthly": [
+	# 	"supertech.tasks.monthly"
+	# ]
+}
 
 # Testing
 # -------
