@@ -103,46 +103,42 @@ def calculate_profitablitys(customer):
         count = dd[0]['RMC_total']
 
     if count < 50:
-        frappe.db.set_value('Customer', customer, 'profitablity',10)
+        frappe.db.set_value('Customer', customer, 'profitablity',1)
         frappe.db.commit()
         return 50,count
 
     elif 50 < count <= 55:
-        frappe.db.set_value('Customer', customer, 'profitablity',9)
+        frappe.db.set_value('Customer', customer, 'profitablity',2)
         frappe.db.commit()
         return 50,count
 
     elif 55 < count <= 60:
-        frappe.db.set_value('Customer', customer, 'profitablity',8)
+        frappe.db.set_value('Customer', customer, 'profitablity',3)
         frappe.db.commit()
         return 55,count
 
     elif 60 < count <= 65:
-        frappe.db.set_value('Customer', customer, 'profitablity',7)
+        frappe.db.set_value('Customer', customer, 'profitablity',5)
         frappe.db.commit()
         return 60,count
 
     elif 65 < count <= 70:
-        frappe.db.set_value('Customer', customer, 'profitablity',5)
+        frappe.db.set_value('Customer', customer, 'profitablity',7)
         frappe.db.commit()
         return 65,count
 
     elif 70 < count <= 75:
-        frappe.db.set_value('Customer', customer, 'profitablity',3)
+        frappe.db.set_value('Customer', customer, 'profitablity',8)
         frappe.db.commit()
         return 70,count
 
     elif 75 < count <= 80:
-        frappe.db.set_value('Customer', customer, 'profitablity',2)
+        frappe.db.set_value('Customer', customer, 'profitablity',9)
         frappe.db.commit()
         return 75,count
 
     elif 80 < count:
-        frappe.db.set_value('Customer', customer, 'profitablity',1)
-        frappe.db.commit()
-        return 80,count
-    elif 80 < count:
-        frappe.db.set_value('Customer', customer, 'profitablity',1)
+        frappe.db.set_value('Customer', customer, 'profitablity',10)
         frappe.db.commit()
         return 80,count
     else:
