@@ -88,7 +88,7 @@ def calculate_profitablitys(customer):
                                 qi.rmc_*qi.qty as rm_value,
                                 qi.rmc_*qi.qty as sales_value,
                                 (qi.rmc_*qi.qty) / (qi.rate*qi.qty) as RMC,
-                                (sum(qi.rmc_*qi.qty) / sum(qi.rate*qi.qty))/100 as RMC_total
+                                (sum(qi.rmc_*qi.qty) / sum(qi.rate*qi.qty))*100 as RMC_total
                             from 
                               `tabQuotation Item` qi
                             
