@@ -82,21 +82,24 @@ def calculate_volume(customer):
 @frappe.whitelist()
 def calculate_profitablitys(customer):
     dd = frappe.db.sql(f""" select
-                                qi.qty, 
-                                qi.rate, 
-                                qi.rmc_,
-                                qi.rmc_*qi.qty as rm_value,
-                                qi.rmc_*qi.qty as sales_value,
-                                (qi.rmc_*qi.qty) / (qi.rate*qi.qty) as RMC,
+                                sum(qi.qty), 
+                                sum(qi.rate), 
+                                sum(qi.rmc_),
+                                sum(qi.rmc_*qi.qty) as rm_value,
+                                sum(qi.rate*qi.qty) as sales_value,
                                 (sum(qi.rmc_*qi.qty) / sum(qi.rate*qi.qty))*100 as RMC_total
+
                             from 
-                              `tabQuotation Item` qi
+                            `tabSales Invoice Item` qi
                             
-                            left join `tabQuotation` q on qi.parent = q.name
-                            where q.party_name = '{customer}' 
-                                and  q.transaction_date 
+                            left join `tabSales Invoice` q on qi.parent = q.name
+                            
+                            where q.customer = '{customer}' 
+                             and  q.posting_date 
                                  between '{add_to_date(today(), days=-365, as_string=True)}' 
-                                 and '{today()}'
+                                 and '{today()}' and q.status IN ('Draft', 'Submitted');
+                            
+
                 """,as_dict=1)
     count  = 0
     if dd[0]['RMC_total'] != None:
@@ -234,6 +237,7 @@ def calaculate_payments_delay(customer):
                                  posting_date 
                                  between '{add_to_date(today(), days=-365, as_string=True)}' 
                                  and '{today()}'
+                                 and status IN ('Draft', 'Submitted');
 
                         """,as_dict=1)
                         

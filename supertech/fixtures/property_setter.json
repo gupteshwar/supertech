@@ -1361,23 +1361,6 @@
  },
  {
   "default_value": null,
-  "doc_type": "Purchase Receipt",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "provisional_expense_account",
-  "modified": "2022-06-29 09:43:12.246393",
-  "name": "Purchase Receipt-provisional_expense_account-hidden",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "property": "hidden",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
   "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
@@ -3583,6 +3566,23 @@
   "parenttype": null,
   "property": "columns",
   "property_type": "Int",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Purchase Receipt",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "provisional_expense_account",
+  "modified": "2022-10-17 13:50:19.506437",
+  "name": "Purchase Receipt-provisional_expense_account-hidden",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "hidden",
+  "property_type": "Check",
   "row_name": null,
   "value": "1"
  }
