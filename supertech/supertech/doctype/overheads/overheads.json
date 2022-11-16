@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-11-10 16:20:34.561545",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "overhead_type",
+  "unit",
+  "overhead_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "overhead_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Overhead type",
+   "options": "Overhead Type",
+   "search_index": 1
+  },
+  {
+   "fetch_from": "overhead_type.unit",
+   "fetch_if_empty": 1,
+   "fieldname": "unit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Unit",
+   "search_index": 1
+  },
+  {
+   "fieldname": "overhead_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Overhead Amount",
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-11-11 15:10:04.670714",
+ "modified_by": "Administrator",
+ "module": "Supertech",
+ "name": "Overheads",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

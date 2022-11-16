@@ -1,0 +1,19 @@
+[
+ {
+  "allow_guest": 1,
+  "api_method": "STOCK_ENTRYWORK",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2022-11-13 16:27:58.571285",
+  "name": "STOCK ENTRYWORK",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "reference_doctype": null,
+  "script": "frappe.response['args']=(frappe.request.args)\nfrappe.response[\"args\"]=(frappe.form_dict)\n\nitem_code = frappe.response['args']['item_code']\n# pwd = frappe.response['args']['pwd']\n\n\ndd = frappe.db.sql(f\"\"\"  select \n                          sle.name,\n                          sle.posting_date,\n                          sle.incoming_rate,\n                          se.stock_entry_type\n                          \n                        from \n                          `tabStock Ledger Entry` sle\n                          \n                        left join `tabStock Entry` se on se.name = sle.voucher_no and se.stock_entry_type = 'Manufacture'\n                        \n                        where sle.item_code = '{item_code}' and se.stock_entry_type = 'Manufacture'\n                        \n                        order by sle.posting_date desc\n                        \n                         \"\"\",as_dict=1)\n                        \n                        \nfrappe.response[\"message\"] = dd\n    \n\n    ",
+  "script_type": "API"
+ }
+]
