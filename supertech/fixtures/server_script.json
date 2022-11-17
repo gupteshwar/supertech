@@ -24,13 +24,13 @@
   "doctype": "Server Script",
   "doctype_event": "Before Save (Submitted Document)",
   "event_frequency": "All",
-  "modified": "2022-11-17 17:06:46.681806",
+  "modified": "2022-11-17 17:43:39.594532",
   "name": "bom_save",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "reference_doctype": "BOM",
-  "script": "etotal = 0 \nototal = 0\n\nfor i in doc.electricity_table:\n    i.unit_consumed = i.end_unit - i.start_unit\n    i.amount =  i.unit_price * i.unit_consumed\n    frappe.db.commit\n    etotal  = etotal + i.amount\n    \n    \nfor d in doc.overheads_table:\n    d.overhead_amount = d.unit * (doc.rmc_per_unit /100)\n    frappe.db.commit\n\n    ototal  = ototal + d.unit * (doc.rmc_per_unit /100)\n\n\ndoc.electricity_per_unit =  etotal/doc.quantity\nfrappe.db.commit\n\ndoc.total_overheads = ototal\nfrappe.db.commit\n\n\n",
+  "script": "etotal = 0 \nototal = 0\n\nfor i in doc.electricity_table:\n    i.unit_consumed = i.end_unit - i.start_unit\n    i.amount =  i.unit_price * i.unit_consumed\n    frappe.db.commit\n    etotal  = etotal + i.amount\n    \n    \nfor d in doc.overheads_table:\n    d.overhead_amount = d.unit * (doc.raw_material_cost /100)\n    frappe.db.commit\n\n    ototal  = ototal + d.unit * (doc.raw_material_cost /100)\n\n\ndoc.electricity_per_unit =  etotal/doc.quantity\nfrappe.db.commit\n\ndoc.total_overheads = ototal/doc.quantity\nfrappe.db.commit\n\n\n",
   "script_type": "DocType Event"
  }
 ]
