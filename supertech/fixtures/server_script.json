@@ -15,5 +15,22 @@
   "reference_doctype": null,
   "script": "frappe.response['args']=(frappe.request.args)\nfrappe.response[\"args\"]=(frappe.form_dict)\n\nitem_code = frappe.response['args']['item_code']\n\n\ndd = frappe.db.sql(f\"\"\"  select \n                          sle.name,\n                          sle.posting_date,\n                          sle.incoming_rate,\n                          se.stock_entry_type\n                          \n                        from \n                          `tabStock Ledger Entry` sle\n                          \n                        left join `tabStock Entry` se on se.name = sle.voucher_no and se.stock_entry_type = 'Manufacture'\n                        \n                        where sle.item_code = '{item_code}' and se.stock_entry_type = 'Manufacture' and sle.incoming_rate != 0\n                        \n                        order by sle.posting_date desc\n                        \n                         \"\"\",as_dict=1)\n                        \n                        \nfrappe.response[\"message\"] = dd\n    \n\n    ",
   "script_type": "API"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Save (Submitted Document)",
+  "event_frequency": "All",
+  "modified": "2022-11-17 17:06:46.681806",
+  "name": "bom_save",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "reference_doctype": "BOM",
+  "script": "etotal = 0 \nototal = 0\n\nfor i in doc.electricity_table:\n    i.unit_consumed = i.end_unit - i.start_unit\n    i.amount =  i.unit_price * i.unit_consumed\n    frappe.db.commit\n    etotal  = etotal + i.amount\n    \n    \nfor d in doc.overheads_table:\n    d.overhead_amount = d.unit * (doc.rmc_per_unit /100)\n    frappe.db.commit\n\n    ototal  = ototal + d.unit * (doc.rmc_per_unit /100)\n\n\ndoc.electricity_per_unit =  etotal/doc.quantity\nfrappe.db.commit\n\ndoc.total_overheads = ototal\nfrappe.db.commit\n\n\n",
+  "script_type": "DocType Event"
  }
 ]
