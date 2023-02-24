@@ -45,7 +45,7 @@ def sendmail_after_eighteen_hrs():
         b2 = str(now_datetime())[:11]
         b = str(now_datetime())[11:13]
         d = int(b)
-        if b2 == a1 and d == 23:
+        if b2 == a1 and d == 17:
             ms = f'''Dear Sir,<br><br>
              want to reach out personally and thank you for the order. We appreciate your business.<br><br>
              Our team is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
@@ -80,7 +80,7 @@ def sendmail_one_day_before_due_date():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 23:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -159,7 +159,7 @@ def sendmail_after_ten():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 10:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -238,7 +238,7 @@ def sendmail_after_twenty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -316,7 +316,7 @@ def sendmail_after_forty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -394,7 +394,7 @@ def sendmail_seventeen():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
 Hi 
@@ -448,7 +448,7 @@ def sendmail_thirty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16:
+        if b == a and d == 13:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
 Hi 
