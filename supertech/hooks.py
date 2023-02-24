@@ -96,13 +96,12 @@ fixtures = ['Custom Field','Notification','Client Script','Server Script','Webho
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	
+	"Sales Invoice": {
+		"on_submit": "supertech.custom_script.sales_order.sales_order.sendmail1"
+}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -118,16 +117,29 @@ scheduler_events = {
         "0 17 * * *": [
             "supertech.custom_script.customer.customer.customer_scoring"
         ]
-    }
+		
+		
+    },
 	# "all": [
 	# 	"supertech.tasks.all"
 	# ],
 	# "daily": [
-	# 	"supertech.tasks.daily"
+	# 	"supertech.supertech.script.sales.sendmail_afteroneda",
+	# 	"supertech.supertech.script.sales.sendmail_after",
+	# 	"supertech.supertech.script.sales.sendmail_function",
+	# 	# "supertech.supertech.script.sales.sendmail_function_before_one_day",
+	# 	"supertech.supertech.script.sales.sendmail_beforeoneday"
 	# ],
-	# "hourly": [
-	# 	"supertech.tasks.hourly"
-	# ],
+	"hourly": [
+           "supertech.supertech.script.sales.sendmail",
+		   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
+		   "supertech.supertech.script.sales.sendmail_one_day_before_due_date",
+		   "supertech.supertech.script.sales.sendmail_after_ten",
+		   "supertech.supertech.script.sendmail_after_twenty_five",
+		   "supertech.supertech.script.sales.sendmail_after_forty_five",
+		   "supertech.supertech.script.sales.sendmail_seventeen",
+		   "supertech.supertech.script.sales.sendmail_thirty_five"
+	],
 	# "weekly": [
 	# 	"supertech.tasks.weekly"
 	# ],
