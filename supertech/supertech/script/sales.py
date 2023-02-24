@@ -6,6 +6,9 @@ from datetime import datetime, date
 @frappe.whitelist()
 def sendmail():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+        
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Order", i.get('name'))
@@ -24,20 +27,24 @@ def sendmail():
             Sincerely,<br>   
             Supertech Fabrics
             '''
+            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = "Your order is confirmed!!",
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            cc = all_cc,
+            sender = notification_email_id,
             reference_doctype = "Sales Order",
-            reference_name	= doc.name
+            reference_name	= doc.name,
+            reply_to = doc.i_poc_email
             )
 
 
 @frappe.whitelist()
 def sendmail_after_eighteen_hrs():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Order", i.get('name'))
@@ -45,7 +52,7 @@ def sendmail_after_eighteen_hrs():
         b2 = str(now_datetime())[:11]
         b = str(now_datetime())[11:13]
         d = int(b)
-        if b2 == a1 and d == 17:
+        if b2 == a1 and d == 13:
             ms = f'''Dear Sir,<br><br>
              want to reach out personally and thank you for the order. We appreciate your business.<br><br>
              Our team is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
@@ -57,12 +64,12 @@ def sendmail_after_eighteen_hrs():
              Supertech Fabrics
 
             '''
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = " Many Thanks for your order !!",
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            sender = kiran_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             )
@@ -73,6 +80,8 @@ def sendmail_after_eighteen_hrs():
 @frappe.whitelist()
 def sendmail_one_day_before_due_date():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -80,7 +89,7 @@ def sendmail_one_day_before_due_date():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -130,14 +139,14 @@ Supertech Fabrics<br><br><br>
  
             '''
             
-            
+            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            cc = all_cc,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
@@ -152,6 +161,8 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_ten():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -159,7 +170,7 @@ def sendmail_after_ten():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -209,20 +220,21 @@ Supertech Fabrics<br><br><br>
             '''
             
             
+            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            cc = all_cc,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
                 
-                )                
+                )            
 
 
 #---------------------------------------------25 days after due date -----------------
@@ -231,6 +243,8 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_twenty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -238,7 +252,7 @@ def sendmail_after_twenty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -288,20 +302,21 @@ Supertech Fabrics<br><br><br>
             '''
             
             
+            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            cc = all_cc,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
                 
-                )   
+                )  
 
 #---------------------------------------------45 days after due date -----------------
             
@@ -309,6 +324,8 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_forty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -316,7 +333,7 @@ def sendmail_after_forty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -365,20 +382,21 @@ Supertech Fabrics<br><br><br>
             '''
             
             
+            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =doc.contact_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            cc = all_cc,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
                 
-                ) 
+                )
 
 
 #---------------------------------------------17 days after due date -----------------
@@ -387,14 +405,16 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_seventeen():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    alldoc = frappe.db.get_list("Sales Invoice",{'status':'Unpaid'},['name', 'modified'] )
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+
+    alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         a = add_to_date(doc.due_date, days=17)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
 Hi 
@@ -423,9 +443,7 @@ Supertech Fabrics
             recipients =doc.account_head_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
@@ -441,6 +459,8 @@ Supertech Fabrics
 @frappe.whitelist()
 def sendmail_thirty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -448,7 +468,7 @@ def sendmail_thirty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 13:
+        if b == a and d == 11:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
 Hi 
@@ -477,9 +497,7 @@ Supertech Fabrics
             recipients =doc.account_head_email,
             subject = ms1,
             message = ms,
-            cc = "mrinal.a@indictranstech.com",
-            reply_to = "mrinal.a@indictranstech.com",
-            # sender = doc1.account_head_email,
+            sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},

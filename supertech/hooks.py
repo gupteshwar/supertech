@@ -99,8 +99,9 @@ fixtures = ['Custom Field','Notification','Client Script','Server Script','Webho
 doc_events = {
 	
 	"Sales Invoice": {
-		"on_submit": "supertech.custom_script.sales_order.sales_order.sendmail1"
+		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1"
 }
+
 }
 
 # Scheduled Tasks
