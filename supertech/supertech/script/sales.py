@@ -37,7 +37,11 @@ def sendmail():
             sender = notification_email_id,
             reference_doctype = "Sales Order",
             reference_name	= doc.name,
-            reply_to = doc.i_poc_email
+            reply_to = doc.i_poc_email,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             )
 
 
@@ -52,7 +56,7 @@ def sendmail_after_eighteen_hrs():
         b2 = str(now_datetime())[:11]
         b = str(now_datetime())[11:13]
         d = int(b)
-        if b2 == a1 and d == 13:
+        if b2 == a1 and d == 17:
             ms = f'''Dear Sir,<br><br>
              want to reach out personally and thank you for the order. We appreciate your business.<br><br>
              Our team is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
@@ -72,6 +76,13 @@ def sendmail_after_eighteen_hrs():
             sender = kiran_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
+            
+            
+
             )
 
 #---------------------------------------------one day before due day-----------------
@@ -89,7 +100,7 @@ def sendmail_one_day_before_due_date():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -121,7 +132,7 @@ Please find our Bank Details:<br>
 </tr>
 <tr>
 <td>Bank Account No:</td>
-<td>02437600030</td>
+<td>02436000041</td>
 </tr>
 <tr>
 <td>IFSC Code:</td>
@@ -149,6 +160,10 @@ Supertech Fabrics<br><br><br>
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
@@ -170,7 +185,7 @@ def sendmail_after_ten():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -201,7 +216,7 @@ For Payment , please find our Bank Details:<br>
 </tr>
 <tr>
 <td>Bank Account No:</td>
-<td>02437600030</td>
+<td>02436000041</td>
 </tr>
 <tr>
 <td>IFSC Code:</td>
@@ -230,6 +245,10 @@ Supertech Fabrics<br><br><br>
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
@@ -252,7 +271,7 @@ def sendmail_after_twenty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -270,7 +289,7 @@ Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
 It is requested to kindly advise us on the said payment.<br><br>
-For Payment , please find our Bank Details:<br>
+Please find our Bank Details:<br>
 <table border="1">
 <tbody>
 <tr>
@@ -283,7 +302,7 @@ For Payment , please find our Bank Details:<br>
 </tr>
 <tr>
 <td>Bank Account No:</td>
-<td>02437600030</td>
+<td>02436000041</td>
 </tr>
 <tr>
 <td>IFSC Code:</td>
@@ -312,6 +331,10 @@ Supertech Fabrics<br><br><br>
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
@@ -333,7 +356,7 @@ def sendmail_after_forty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''To<br>
 {doc.customer_name}<br><br>
@@ -363,7 +386,7 @@ We sincerely request you to kindly arrange for the transfer against the said inv
 </tr>
 <tr>
 <td>Bank Account No:</td>
-<td>02437600030</td>
+<td>02436000041</td>
 </tr>
 <tr>
 <td>IFSC Code:</td>
@@ -392,6 +415,10 @@ Supertech Fabrics<br><br><br>
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
@@ -414,14 +441,14 @@ def sendmail_seventeen():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
-Hi 
+Hi {doc.account_head_name}
 
 <br><br>
 
-The invoice shown below is due from {doc.customer} from last 17 days.<br>
+The invoice shown below is due from {doc.customer_name} from last 17 days.<br>
 Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
@@ -438,14 +465,18 @@ Supertech Fabrics
  
             '''
             
-            
+            recipients = [doc.i_poc_email,doc.account_head_email]
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =recipients,
             subject = ms1,
             message = ms,
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
@@ -468,14 +499,14 @@ def sendmail_thirty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 11:
+        if b == a and d == 16 and doc.outstanding_amount > 0:
             ms1 = f'''Invoice No {doc.name} is OVERDUE'''
             ms = f'''Re: {doc.customer_name}<br>
-Hi 
+Hi {doc.account_head_name}
 
 <br><br>
 
-The invoice shown below is due from {doc.customer} from last 35 days.<br>
+The invoice shown below is due from {doc.customer_name} from last 35 days.<br>
 Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
@@ -492,16 +523,190 @@ Supertech Fabrics
  
             '''
             
-            
+            recipients = [doc.i_poc_email,doc.account_head_email]
             frappe.sendmail(
-            recipients =doc.account_head_email,
+            recipients =recipients,
             subject = ms1,
             message = ms,
             sender = notification_email_id,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
             attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
             
             ]
                 
-                ) 
+                )
+
+#---------------------------------------------50 days after due date -----------------
+            
+
+@frappe.whitelist()
+def sendmail_fifty():
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+
+    alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
+    for i in alldoc:
+        doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        a = add_to_date(doc.due_date, days=50)
+        b = now_datetime().date()
+        c = str(now_datetime())[11:13]
+        d = int(c)
+        if b == a and d == 16 and doc.outstanding_amount > 0:
+            ms1 = f'''Invoice No {doc.name} is OVERDUE'''
+            ms = f'''Re: {doc.customer_name}<br>
+Hi {doc.account_head_name}
+
+<br><br>
+
+The invoice shown below is due from {doc.customer_name} from last 50 days.<br>
+Please contact the client and seek immediate payment.<br>
+Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
+Invoice Number: {doc.name}
+ <br>
+Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
+Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
+<br>
+<br>
+If this has been processed recently, then we request you to share the payment advice with us.
+<br><br><br>
+Sincerely,<br>
+Supertech Fabrics
+ 
+            '''
+            
+            recipients = [doc.i_poc_email,doc.account_head_email]
+            frappe.sendmail(
+            recipients =recipients,
+            subject = ms1,
+            message = ms,
+            sender = notification_email_id,
+            reference_doctype = "Sales Invoice",
+            reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
+            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
+            
+            ]
+                
+                )
+#---------------------------------------------70 days after due date -----------------
+            
+
+@frappe.whitelist()
+def sendmail_seventy():
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+
+    alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
+    for i in alldoc:
+        doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        a = add_to_date(doc.due_date, days=70)
+        b = now_datetime().date()
+        c = str(now_datetime())[11:13]
+        d = int(c)
+        if b == a and d == 16 and doc.outstanding_amount > 0:
+            ms1 = f'''Invoice No {doc.name} is OVERDUE'''
+            ms = f'''Re: {doc.customer_name}<br>
+Hi {doc.account_head_name}
+
+<br><br>
+
+The invoice shown below is due from {doc.customer_name} from last 70 days.<br>
+Please contact the client and seek immediate payment.<br>
+Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
+Invoice Number: {doc.name}
+ <br>
+Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
+Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
+<br>
+<br>
+If this has been processed recently, then we request you to share the payment advice with us.
+<br><br><br>
+Sincerely,<br>
+Supertech Fabrics
+ 
+            '''
+            
+            recipients = [doc.i_poc_email,doc.account_head_email]
+            frappe.sendmail(
+            recipients =recipients,
+            subject = ms1,
+            message = ms,
+            sender = notification_email_id,
+            reference_doctype = "Sales Invoice",
+            reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
+            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
+            
+            ]
+                
+                )    
+
+#---------------------------------------------90 days after due date -----------------
+            
+
+@frappe.whitelist()
+def sendmail_ninety():
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+
+    alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
+    for i in alldoc:
+        doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        a = add_to_date(doc.due_date, days=90)
+        b = now_datetime().date()
+        c = str(now_datetime())[11:13]
+        d = int(c)
+        if b == a and d == 16 and doc.outstanding_amount > 0:
+            ms1 = f'''Invoice No {doc.name} is OVERDUE'''
+            ms = f'''Re: {doc.customer_name}<br>
+Hi {doc.account_head_name}
+
+<br><br>
+
+The invoice shown below is due from {doc.customer_name} from last 90 days.<br>
+Please contact the client and seek immediate payment.<br>
+Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
+Invoice Number: {doc.name}
+ <br>
+Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
+Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
+<br>
+<br>
+If this has been processed recently, then we request you to share the payment advice with us.
+<br><br><br>
+Sincerely,<br>
+Supertech Fabrics
+ 
+            '''
+            
+            recipients = [doc.i_poc_email,doc.account_head_email]
+            frappe.sendmail(
+            recipients =recipients,
+            subject = ms1,
+            message = ms,
+            sender = notification_email_id,
+            reference_doctype = "Sales Invoice",
+            reference_name	= doc.name,
+            now =  True,
+            expose_recipients = "header",
+            read_receipt = 0,
+            is_notification = False,
+            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
+            
+            ]
+                
+                )                                                                                  

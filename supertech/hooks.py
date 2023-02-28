@@ -102,6 +102,7 @@ doc_events = {
 		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1"
 }
 
+
 }
 
 # Scheduled Tasks
@@ -136,10 +137,13 @@ scheduler_events = {
 		   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
 		   "supertech.supertech.script.sales.sendmail_one_day_before_due_date",
 		   "supertech.supertech.script.sales.sendmail_after_ten",
-		   "supertech.supertech.script.sendmail_after_twenty_five",
+		   "supertech.supertech.script.sales.sendmail_after_twenty_five",
 		   "supertech.supertech.script.sales.sendmail_after_forty_five",
 		   "supertech.supertech.script.sales.sendmail_seventeen",
-		   "supertech.supertech.script.sales.sendmail_thirty_five"
+		   "supertech.supertech.script.sales.sendmail_thirty_five",
+		   "supertech.supertech.script.sales.sendmail_fifty",
+		   "supertech.supertech.script.sales.sendmail_seventy",
+		   "supertech.supertech.script.sales.sendmail_ninety"
 	],
 	# "weekly": [
 	# 	"supertech.tasks.weekly"
