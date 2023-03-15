@@ -1,13 +1,16 @@
 import frappe
 from frappe.utils import now_datetime, time_diff_in_hours,pretty_date, now, add_to_date
 from datetime import datetime, date
+from email.utils import formataddr
+
 
 
 @frappe.whitelist()
 def sendmail():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Supertech"
+    director = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
         
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -27,14 +30,15 @@ def sendmail():
             Sincerely,<br>   
             Supertech Fabrics
             '''
-            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ director, doc.i_poc_email, doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = "Your order is confirmed!!",
             message = ms,
             cc = all_cc,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Order",
             reference_name	= doc.name,
             reply_to = doc.i_poc_email,
@@ -48,7 +52,9 @@ def sendmail():
 @frappe.whitelist()
 def sendmail_after_eighteen_hrs():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    director = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    sender_name = "Utssav Gupta | Director"
+
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Order", i.get('name'))
@@ -68,12 +74,12 @@ def sendmail_after_eighteen_hrs():
              Supertech Fabrics
 
             '''
-
+            sender = formataddr((sender_name, director))
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = " Many Thanks for your order !!",
             message = ms,
-            sender = kiran_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -91,8 +97,10 @@ def sendmail_after_eighteen_hrs():
 @frappe.whitelist()
 def sendmail_one_day_before_due_date():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Supertech"
+    email_id = "stf@utssavgupta.com"
+    bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -112,52 +120,31 @@ We are writing for a gentle reminder that the invoice below is due for Tomorrow.
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
 We deeply value timely business to enable us to continue serving at our best. 
 It is a sincere request to kindly arrange the payment to process the said invoice and advise us of it.<br><br>
 Please find our Bank Details:<br>
-<table border="1">
-<tbody>
-<tr>
-<td>Bank Account Holder :</td>
-<td>SUPERTECH FABRICS PRIVATE LIMITED</td>
-</tr>
-<tr>
-<td>Bank Name:</td>
-<td>The Kalupur Commercial Co-op Bank Ltd</td>
-</tr>
-<tr>
-<td>Bank Account No:</td>
-<td>02436000041</td>
-</tr>
-<tr>
-<td>IFSC Code:</td>
-<td>KCCB0VDD024</td>
-</tr>
-<tr>
-<td>Branch Name:</td>
-<td>Old Padra Road Branch</td>
-</tr>
-</tbody>
-</table><br><br>
+{bank}
+<br><br>
 If you have processed this recently, then we request you to ignore the mail. <br><br><br>
 Sincerely,<br>
 Supertech Fabrics<br><br><br>
  
             '''
             
-            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = ms1,
             message = ms,
             cc = all_cc,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -176,8 +163,11 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_ten():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Supertech"
+    email_id = "stf@utssavgupta.com"
+    bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
+
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -197,37 +187,15 @@ Gentle reminder, payment against invoice no {doc.name} is pending and is due by 
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
 It is requested to kindly advise us on the said payment.<br><br>
 For Payment , please find our Bank Details:<br>
-<table border="1">
-<tbody>
-<tr>
-<td>Bank Account Holder :</td>
-<td>SUPERTECH FABRICS PRIVATE LIMITED</td>
-</tr>
-<tr>
-<td>Bank Name:</td>
-<td>The Kalupur Commercial Co-op Bank Ltd</td>
-</tr>
-<tr>
-<td>Bank Account No:</td>
-<td>02436000041</td>
-</tr>
-<tr>
-<td>IFSC Code:</td>
-<td>KCCB0VDD024</td>
-</tr>
-<tr>
-<td>Branch Name:</td>
-<td>Old Padra Road Branch</td>
-</tr>
-</tbody>
-</table><br><br>
+{bank}
+<br><br>
 If you have processed this recently, then we request you to ignore the mail. <br><br><br>
 Sincerely,<br>
 Supertech Fabrics<br><br><br>
@@ -235,14 +203,15 @@ Supertech Fabrics<br><br><br>
             '''
             
             
-            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = ms1,
             message = ms,
             cc = all_cc,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -262,8 +231,12 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_twenty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Supertech"
+    email_id = "stf@utssavgupta.com"
+    bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
+
+    
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -283,37 +256,15 @@ Gentle reminder, payment against invoice no {doc.name} is pending and is due by 
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
 It is requested to kindly advise us on the said payment.<br><br>
 Please find our Bank Details:<br>
-<table border="1">
-<tbody>
-<tr>
-<td>Bank Account Holder :</td>
-<td>SUPERTECH FABRICS PRIVATE LIMITED</td>
-</tr>
-<tr>
-<td>Bank Name:</td>
-<td>The Kalupur Commercial Co-op Bank Ltd</td>
-</tr>
-<tr>
-<td>Bank Account No:</td>
-<td>02436000041</td>
-</tr>
-<tr>
-<td>IFSC Code:</td>
-<td>KCCB0VDD024</td>
-</tr>
-<tr>
-<td>Branch Name:</td>
-<td>Old Padra Road Branch</td>
-</tr>
-</tbody>
-</table><br><br>
+{bank}
+<br><br>
 If you have processed this recently, then we request you to ignore the mail. <br><br><br>
 Sincerely,<br>
 Supertech Fabrics<br><br><br>
@@ -321,14 +272,15 @@ Supertech Fabrics<br><br><br>
             '''
             
             
-            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = ms1,
             message = ms,
             cc = all_cc,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -347,8 +299,12 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_after_forty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    kiran_email_id = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Supertech"
+    email_id = "stf@utssavgupta.com"
+    bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
+
+    
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
@@ -368,36 +324,14 @@ Gentle reminder, payment against invoice no {doc.name} is pending and is due by 
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
 We sincerely request you to kindly arrange for the transfer against the said invoice. Please find our Bank Details:<br>
-<table border="1">
-<tbody>
-<tr>
-<td>Bank Account Holder :</td>
-<td>SUPERTECH FABRICS PRIVATE LIMITED</td>
-</tr>
-<tr>
-<td>Bank Name:</td>
-<td>The Kalupur Commercial Co-op Bank Ltd</td>
-</tr>
-<tr>
-<td>Bank Account No:</td>
-<td>02436000041</td>
-</tr>
-<tr>
-<td>IFSC Code:</td>
-<td>KCCB0VDD024</td>
-</tr>
-<tr>
-<td>Branch Name:</td>
-<td>Old Padra Road Branch</td>
-</tr>
-</tbody>
-</table><br><br>
+{bank}
+<br><br>
 If you have processed this recently, then we request you to ignore the mail. <br><br><br>
 Sincerely,<br>
 Supertech Fabrics<br><br><br>
@@ -405,14 +339,15 @@ Supertech Fabrics<br><br><br>
             '''
             
             
-            all_cc = [ kiran_email_id, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
             recipients =doc.contact_email,
             subject = ms1,
             message = ms,
             cc = all_cc,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -432,12 +367,13 @@ Supertech Fabrics<br><br><br>
 @frappe.whitelist()
 def sendmail_seventeen():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
-
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Sruthi Chopra"
+    
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
-        a = add_to_date(doc.due_date, days=17)
+        a = add_to_date(doc.due_date, days=1)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
@@ -453,8 +389,8 @@ Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
@@ -466,11 +402,12 @@ Supertech Fabrics
             '''
             
             recipients = [doc.i_poc_email,doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
             frappe.sendmail(
             recipients =recipients,
             subject = ms1,
             message = ms,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -490,7 +427,9 @@ Supertech Fabrics
 @frappe.whitelist()
 def sendmail_thirty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Sruthi Chopra"
+    
 
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -511,8 +450,8 @@ Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
@@ -524,11 +463,12 @@ Supertech Fabrics
             '''
             
             recipients = [doc.i_poc_email,doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
             frappe.sendmail(
             recipients =recipients,
             subject = ms1,
             message = ms,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -547,7 +487,9 @@ Supertech Fabrics
 @frappe.whitelist()
 def sendmail_fifty():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Sruthi Chopra"
+    
 
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -568,8 +510,8 @@ Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
@@ -581,11 +523,12 @@ Supertech Fabrics
             '''
             
             recipients = [doc.i_poc_email,doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
             frappe.sendmail(
             recipients =recipients,
             subject = ms1,
             message = ms,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -603,7 +546,9 @@ Supertech Fabrics
 @frappe.whitelist()
 def sendmail_seventy():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Sruthi Chopra"
+    
 
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -624,8 +569,8 @@ Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
@@ -637,11 +582,12 @@ Supertech Fabrics
             '''
             
             recipients = [doc.i_poc_email,doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
             frappe.sendmail(
             recipients =recipients,
             subject = ms1,
             message = ms,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
@@ -660,7 +606,8 @@ Supertech Fabrics
 @frappe.whitelist()
 def sendmail_ninety():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    notification_email_id = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    sender_name = "Sruthi Chopra"
 
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -681,8 +628,8 @@ Please contact the client and seek immediate payment.<br>
 Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
 Invoice Number: {doc.name}
  <br>
-Invoice Amount: {doc.currency} {"{:,.2f}".format(doc.rounded_total)}<br>
-Due Amount: {doc.currency} {"{:,.2f}".format(doc.outstanding_amount)}<br>
+Invoice Amount: {doc.get_formatted("rounded_total") }<br>
+Due Amount: {doc.get_formatted("outstanding_amount") }<br>
 Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
 <br>
 <br>
@@ -694,11 +641,12 @@ Supertech Fabrics
             '''
             
             recipients = [doc.i_poc_email,doc.account_head_email]
+            sender = formataddr((sender_name, supertech))
             frappe.sendmail(
             recipients =recipients,
             subject = ms1,
             message = ms,
-            sender = notification_email_id,
+            sender = sender,
             reference_doctype = "Sales Invoice",
             reference_name	= doc.name,
             now =  True,
