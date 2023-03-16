@@ -151,9 +151,7 @@ Supertech Fabrics<br><br><br>
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )
 
@@ -218,9 +216,7 @@ Supertech Fabrics<br><br><br>
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )            
 
@@ -287,9 +283,7 @@ Supertech Fabrics<br><br><br>
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )  
 
@@ -354,9 +348,7 @@ Supertech Fabrics<br><br><br>
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )
 
@@ -373,7 +365,7 @@ def sendmail_seventeen():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
-        a = add_to_date(doc.due_date, days=1)
+        a = add_to_date(doc.due_date, days=17)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
@@ -414,9 +406,7 @@ Supertech Fabrics
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 ) 
 
@@ -475,9 +465,7 @@ Supertech Fabrics
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )
 
@@ -535,9 +523,7 @@ Supertech Fabrics
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )
 #---------------------------------------------70 days after due date -----------------
@@ -594,9 +580,7 @@ Supertech Fabrics
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )    
 
@@ -653,8 +637,6 @@ Supertech Fabrics
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
-            attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice", "lang": "en-GB"},
-            
-            ]
+            attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                 
                 )                                                                                  

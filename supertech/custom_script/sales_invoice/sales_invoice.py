@@ -47,10 +47,8 @@ Supertech Fabrics<br><br>
         expose_recipients = "header",
         read_receipt = 0,
         is_notification = False,
-        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
-        # attachments = [{"print_format_attachment": 1, "doctype": "Sales Invoice", "name": doc.name, "print_format": "Supertech Sales Invoice","print_letterhead": 1, "lang": "en-GB"},{"fid": doc.file},
+        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True), {"fid": doc.file}]
         
-        # ]
             
             )
 
