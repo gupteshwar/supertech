@@ -99,7 +99,16 @@ fixtures = ['Custom Field','Notification','Client Script','Server Script','Webho
 doc_events = {
 	
 	"Sales Invoice": {
-		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1"
+		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
+		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save",
+
+
+},
+"Sales Order": {
+		"before_save": "supertech.custom_script.sales_order.sales_order.before_save",
+},
+"Delivery Note": {
+		"before_save": "supertech.custom_script.delivery_note.delivery_note.before_save",
 }
 
 
