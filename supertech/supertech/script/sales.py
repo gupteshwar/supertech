@@ -64,8 +64,8 @@ def sendmail_after_eighteen_hrs():
         d = int(b)
         if b2 == a1 and d == 17:
             ms = f'''Dear Sir,<br><br>
-             want to reach out personally and thank you for the order. We appreciate your business.<br><br>
-             Our team is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
+             I want to personally reach out and thank you for the order. We appreciate your business.<br><br>
+             Our company is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
              Thank you once again!!
              <br><br>
              Sincerely,<br>
