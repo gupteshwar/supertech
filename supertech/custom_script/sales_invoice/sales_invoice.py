@@ -10,7 +10,6 @@ def sendmail1(doc, method):
                 sender_name = "Supertech Fabrics"
                 director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
                 plant_manager = "gaurang@supertechfabrics.com"
-                # plant_manager = "mrinal.a@indictranstech.com "
                 ms = f'''To<br>
         {doc.customer_name}<br><br>
         Dear Sir,<br>
