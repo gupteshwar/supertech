@@ -197,7 +197,7 @@
    "description": null,
    "docstatus": 0,
    "dt": "Customer",
-   "fetch_from": "user.full_name",
+   "fetch_from": "account_head.full_name",
    "fetch_if_empty": 0,
    "fieldname": "account_head_name",
    "fieldtype": "Data",
