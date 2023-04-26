@@ -6,11 +6,11 @@ from frappe import _
 
 def sendmail1(doc, method):
         if doc.po_no:
-                supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-                sender_name = "Supertech"
-                director = frappe.db.get_value("Email Account", "choudharykiran9721@gmail.com", "email_id")
-                # plant_manager = "gaurang@supertechfabrics.com"
-                plant_manager = "mrinal.a@indictranstech.com "
+                supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+                sender_name = "Supertech Fabrics"
+                director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
+                plant_manager = "gaurang@supertechfabrics.com"
+                # plant_manager = "mrinal.a@indictranstech.com "
                 ms = f'''To<br>
         {doc.customer_name}<br><br>
         Dear Sir,<br>

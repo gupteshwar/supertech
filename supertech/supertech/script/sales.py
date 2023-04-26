@@ -8,9 +8,9 @@ from email.utils import formataddr
 @frappe.whitelist()
 def sendmail():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    sender_name = "Supertech"
-    director = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+    sender_name = "Supertech Fabrics"
+    director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
         
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -52,7 +52,7 @@ def sendmail():
 @frappe.whitelist()
 def sendmail_after_eighteen_hrs():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    director = frappe.db.get_value("Email Account", "kiran choudhary gmail", "email_id")
+    director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
     sender_name = "Utssav Gupta | Director"
 
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
@@ -97,8 +97,8 @@ def sendmail_after_eighteen_hrs():
 @frappe.whitelist()
 def sendmail_one_day_before_due_date():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    sender_name = "Supertech"
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+    sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
@@ -209,8 +209,8 @@ def sendmail_one_day_before_due_date():
 @frappe.whitelist()
 def sendmail_after_ten():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    sender_name = "Supertech"
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+    sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
@@ -323,8 +323,8 @@ def sendmail_after_ten():
 @frappe.whitelist()
 def sendmail_after_twenty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    sender_name = "Supertech"
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+    sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
@@ -435,8 +435,8 @@ def sendmail_after_twenty_five():
 @frappe.whitelist()
 def sendmail_after_forty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
-    sender_name = "Supertech"
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+    sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
@@ -547,7 +547,7 @@ def sendmail_after_forty_five():
 @frappe.whitelist()
 def sendmail_seventeen():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Sruthi Chopra"
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -645,7 +645,7 @@ def sendmail_seventeen():
 @frappe.whitelist()
 def sendmail_thirty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Sruthi Chopra"
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -744,7 +744,7 @@ def sendmail_thirty_five():
 @frappe.whitelist()
 def sendmail_fifty():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Sruthi Chopra"
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
@@ -842,7 +842,7 @@ def sendmail_fifty():
 @frappe.whitelist()
 def sendmail_seventy():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Sruthi Chopra"
         
 
@@ -942,7 +942,7 @@ def sendmail_seventy():
 @frappe.whitelist()
 def sendmail_ninety():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    supertech = frappe.db.get_value("Email Account", "Notifications", "email_id")
+    supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Sruthi Chopra"
 
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
