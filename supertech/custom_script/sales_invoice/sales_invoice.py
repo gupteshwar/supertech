@@ -10,6 +10,8 @@ def sendmail1(doc, method):
                 sender_name = "Supertech Fabrics"
                 director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
                 plant_manager = "gaurang@supertechfabrics.com"
+                i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+                account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
                 ms = f'''To<br>
         {doc.customer_name}<br><br>
         Dear Sir,<br>
@@ -35,7 +37,7 @@ def sendmail1(doc, method):
 
         '''
                 
-                all_cc = [ director, plant_manager, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ director, plant_manager, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =doc.contact_email,
@@ -59,6 +61,8 @@ def sendmail1(doc, method):
                 director = frappe.db.get_value("Email Account", "choudharykiran9721@gmail.com", "email_id")
                 # plant_manager = "gaurang@supertechfabrics.com"
                 plant_manager = "mrinal.a@indictranstech.com "
+                i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+                account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
                 ms = f'''To<br>
         {doc.customer_name}<br><br>
         Dear Sir,<br>
@@ -83,7 +87,7 @@ def sendmail1(doc, method):
 
         '''
                 
-                all_cc = [ director, plant_manager, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ director, plant_manager, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =doc.contact_email,
@@ -100,15 +104,53 @@ def sendmail1(doc, method):
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True), {"fid": doc.file}]
                 
                 
-                )        
+                ) 
+
+#----------------------------------------Your order has been dispatched!!-------------------------
+
+def before_save(doc,method):
+        supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+        sender_name = "Supertech Fabrics"
+        director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
+        plant_manager = "gaurang@supertechfabrics.com"
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        ms = f'''
+        To<br>
+        {doc.customer_name}<br><br>
+        Dear Sir,<br><br>
+        Your order has been dispatched. We shall share with you the LR & transportor details in our next email shortly. Invoice is attached to this mail. Hard copy shall be available with the shipment.
+        <br><br>
+        Thank you for your business.<br><br>
+        Sincerely, <br>
+        Supertech Fabrics
+        '''
+        all_cc = [ director, plant_manager, i_poc_email, account_head_email]
+        sender = formataddr((sender_name, supertech))
+        frappe.sendmail(
+        recipients =doc.contact_email,
+        subject = "Your order has been dispatched!!",
+        message = ms,
+        cc = all_cc,
+        sender = sender,
+        reference_doctype = "Sales Invoice",
+        reference_name	= doc.name,
+        now =  True,
+        expose_recipients = "header",
+        read_receipt = 0,
+        is_notification = False,
+        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
+                
+                
+                ) 
+
+
+
 
 #---------------------------------------------------------------------------------
 
-def before_save(doc, method):
+def customer_category_validation(doc, method):
     if doc.customer_category == "Export" and doc.taxes_and_charges != None:
         frappe.throw(frappe._("You can not select sales taxes and template,if customer category is 'Export'."))
-     
-
-#-------------------------------------------------------------------------
-
-              
+        
+        
