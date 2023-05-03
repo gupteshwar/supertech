@@ -11,10 +11,11 @@ def sendmail():
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
     sender_name = "Supertech Fabrics"
     director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
-        
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Order", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a1 = str(doc.modified)[:11]
         b1 = str(now_datetime())[:11]
         a = str(doc.modified)[11:13]
@@ -30,7 +31,7 @@ def sendmail():
             Sincerely,<br>   
             Supertech Fabrics
             '''
-            all_cc = [ director, doc.i_poc_email, doc.account_head_email]
+            all_cc = [ director,i_poc_email,account_head_email]
             sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
@@ -104,6 +105,8 @@ def sendmail_one_day_before_due_date():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=-1)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -138,7 +141,7 @@ def sendmail_one_day_before_due_date():
     
                 '''
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -184,7 +187,7 @@ def sendmail_one_day_before_due_date():
     
                 '''
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -216,6 +219,8 @@ def sendmail_after_ten():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=10)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -250,7 +255,7 @@ def sendmail_after_ten():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -296,7 +301,7 @@ def sendmail_after_ten():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -330,6 +335,8 @@ def sendmail_after_twenty_five():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=25)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -364,7 +371,7 @@ def sendmail_after_twenty_five():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -410,7 +417,7 @@ def sendmail_after_twenty_five():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -442,6 +449,8 @@ def sendmail_after_forty_five():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=45)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -475,7 +484,7 @@ def sendmail_after_forty_five():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -520,7 +529,7 @@ def sendmail_after_forty_five():
                 '''
                 
                 
-                all_cc = [ email_id, doc.i_poc_email, doc.account_head_email]
+                all_cc = [ email_id, i_poc_email, account_head_email]
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
@@ -552,6 +561,9 @@ def sendmail_seventeen():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=17)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -560,7 +572,7 @@ def sendmail_seventeen():
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -582,7 +594,7 @@ def sendmail_seventeen():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -601,7 +613,7 @@ def sendmail_seventeen():
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -622,7 +634,7 @@ def sendmail_seventeen():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -650,6 +662,9 @@ def sendmail_thirty_five():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=35)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -658,7 +673,7 @@ def sendmail_thirty_five():
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -680,7 +695,7 @@ def sendmail_thirty_five():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -699,7 +714,7 @@ def sendmail_thirty_five():
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -720,7 +735,7 @@ def sendmail_thirty_five():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -749,6 +764,9 @@ def sendmail_fifty():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=50)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -757,7 +775,7 @@ def sendmail_fifty():
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -779,7 +797,7 @@ def sendmail_fifty():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -798,7 +816,7 @@ def sendmail_fifty():
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -819,7 +837,7 @@ def sendmail_fifty():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -849,6 +867,9 @@ def sendmail_seventy():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=70)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -857,7 +878,7 @@ def sendmail_seventy():
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -879,7 +900,7 @@ def sendmail_seventy():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -898,7 +919,7 @@ def sendmail_seventy():
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -919,7 +940,7 @@ def sendmail_seventy():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -948,6 +969,9 @@ def sendmail_ninety():
     alldoc = frappe.db.get_list("Sales Invoice",{'docstatus':1},['name', 'modified'] )
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
+        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=90)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
@@ -956,7 +980,7 @@ def sendmail_ninety():
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -978,7 +1002,7 @@ def sendmail_ninety():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,
@@ -997,7 +1021,7 @@ def sendmail_ninety():
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
-    Hi {doc.account_head_name}
+    Hi {account_head_name}
 
     <br><br>
 
@@ -1018,7 +1042,7 @@ def sendmail_ninety():
     
                 '''
                 
-                recipients = [doc.i_poc_email,doc.account_head_email]
+                recipients = [i_poc_email,account_head_email]
                 sender = formataddr((sender_name, supertech))
                 frappe.sendmail(
                 recipients =recipients,

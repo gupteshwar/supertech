@@ -91,6 +91,9 @@ fixtures = ['Custom Field','Notification','Client Script','Server Script','Webho
 # override_doctype_class = {
 #	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+# doctype_js = {
+# 	"Sales Invoice" : "supertech/custom_script/sales_invoice/sales_invoice.js",
+# 	}
 
 # Document Events
 # ---------------
@@ -100,7 +103,10 @@ doc_events = {
 	
 	"Sales Invoice": {
 		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
-		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save",
+		"before_save": ["supertech.custom_script.sales_invoice.sales_invoice.before_save","supertech.custom_script.sales_invoice.sales_invoice.customer_category_validation"]
+		
+	
+
 
 
 },
