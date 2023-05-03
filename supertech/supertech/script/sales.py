@@ -47,6 +47,8 @@ def sendmail():
             expose_recipients = "header",
             read_receipt = 0,
             is_notification = False,
+            attachments = [frappe.attach_print("Sales Order", doc.name, print_format="Supertech Proforma Invoice", print_letterhead=True)]
+                    
             )
 
 
