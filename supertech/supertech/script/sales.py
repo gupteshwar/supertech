@@ -9,6 +9,7 @@ from email.utils import formataddr
 def sendmail():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+
     sender_name = "Supertech Fabrics"
     director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
@@ -24,6 +25,7 @@ def sendmail():
         print(type(a))
         c = (int(b) - int(a))
         if b1 == a1 and c == 2:
+
             ms = f'''Dear Sir,<br><br>
             Thank you for your order. <br>
             This is to acknowledge you that we are processing your order. In case of a query, our team shall reach out soon. The dispatch date and details shall be notified soon.
@@ -101,6 +103,7 @@ def sendmail_after_eighteen_hrs():
 def sendmail_one_day_before_due_date():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+
     sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
@@ -114,6 +117,7 @@ def sendmail_one_day_before_due_date():
         c = str(now_datetime())[11:13]
         d = int(c)
         if b == a and d == 16 and doc.outstanding_amount > 0:
+
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>

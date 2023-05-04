@@ -103,7 +103,7 @@ doc_events = {
 	
 	"Sales Invoice": {
 		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
-		"before_save": ["supertech.custom_script.sales_invoice.sales_invoice.before_save","supertech.custom_script.sales_invoice.sales_invoice.customer_category_validation"]
+		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save"
 		
 	
 
@@ -222,4 +222,3 @@ user_data_fields = [
 # auth_hooks = [
 #	"supertech.auth.validate"
 # ]
-
