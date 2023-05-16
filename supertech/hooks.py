@@ -103,7 +103,9 @@ doc_events = {
 	
 	"Sales Invoice": {
 		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
-		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save"
+		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save",
+		"on_update_after_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail_on_update",
+
 		
 	
 
@@ -115,6 +117,12 @@ doc_events = {
 },
 "Delivery Note": {
 		"before_save": "supertech.custom_script.delivery_note.delivery_note.before_save",
+},
+
+"Payment Entry":{
+		"on_submit": "supertech.custom_script.payment_entry.payment_entry.payment_sendmail",
+
+
 }
 
 
