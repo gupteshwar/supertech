@@ -4,11 +4,12 @@ from datetime import datetime, date
 from email.utils import formataddr
 
 
-
+l = []
 @frappe.whitelist()
 def sendmail():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+
 
     sender_name = "Supertech Fabrics"
     director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
@@ -34,10 +35,19 @@ def sendmail():
             Supertech Fabrics
             '''
             all_cc = [ director,i_poc_email,account_head_email]
+            contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+            for con in contact:
+                doc1 = frappe.get_doc("Contact", con.get('name'))
+                for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l.append(b)
+                                     
             sender = formataddr((sender_name, supertech))
 
             frappe.sendmail(
-            recipients =doc.contact_email,
+            recipients =l,
             subject = "Your order is confirmed!!",
             message = ms,
             cc = all_cc,
@@ -53,7 +63,7 @@ def sendmail():
                     
             )
 
-
+l1 = []
 @frappe.whitelist()
 def sendmail_after_eighteen_hrs():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -79,9 +89,17 @@ def sendmail_after_eighteen_hrs():
              Supertech Fabrics
 
             '''
+            contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+            for con in contact:
+                doc1 = frappe.get_doc("Contact", con.get('name'))
+                for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l1.append(b)
             sender = formataddr((sender_name, director))
             frappe.sendmail(
-            recipients =doc.contact_email,
+            recipients =l1,
             subject = " Many Thanks for your order !!",
             message = ms,
             sender = sender,
@@ -98,11 +116,12 @@ def sendmail_after_eighteen_hrs():
 
 #---------------------------------------------one day before due day-----------------
             
-
+l2 = []
 @frappe.whitelist()
 def sendmail_one_day_before_due_date():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+
 
     sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
@@ -148,10 +167,18 @@ def sendmail_one_day_before_due_date():
                 '''
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l2.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l2,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -194,10 +221,18 @@ def sendmail_one_day_before_due_date():
                 '''
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l2.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l2,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -214,7 +249,7 @@ def sendmail_one_day_before_due_date():
     
 #---------------------------------------------10 days after due date -----------------
             
-
+l10 = []
 @frappe.whitelist()
 def sendmail_after_ten():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -262,10 +297,18 @@ def sendmail_after_ten():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l10.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l10,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -308,10 +351,18 @@ def sendmail_after_ten():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l10.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l10,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -330,7 +381,7 @@ def sendmail_after_ten():
 
 #---------------------------------------------25 days after due date -----------------
             
-
+l25 = []
 @frappe.whitelist()
 def sendmail_after_twenty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -378,10 +429,18 @@ def sendmail_after_twenty_five():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l25.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l25,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -424,10 +483,18 @@ def sendmail_after_twenty_five():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l25.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l25,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -444,7 +511,7 @@ def sendmail_after_twenty_five():
    
 #---------------------------------------------45 days after due date -----------------
             
-
+l45 = []
 @frappe.whitelist()
 def sendmail_after_forty_five():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -491,10 +558,18 @@ def sendmail_after_forty_five():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l45.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l45,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
@@ -536,10 +611,18 @@ def sendmail_after_forty_five():
                 
                 
                 all_cc = [ email_id, i_poc_email, account_head_email]
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                    doc1 = frappe.get_doc("Contact", con.get('name'))
+                    for j in doc1.links:
+                        if doc.customer == j.link_name:
+                                for e in doc1.email_ids:
+                                        b = e.email_id
+                                        l45.append(b)
                 sender = formataddr((sender_name, supertech))
 
                 frappe.sendmail(
-                recipients =doc.contact_email,
+                recipients =l45,
                 subject = ms1,
                 message = ms,
                 cc = all_cc,
