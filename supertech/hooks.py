@@ -102,9 +102,9 @@ fixtures = ['Custom Field','Notification','Client Script','Server Script','Webho
 doc_events = {
 	
 	"Sales Invoice": {
-		"on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
+		# "on_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail1",
 		"before_save": "supertech.custom_script.sales_invoice.sales_invoice.before_save",
-		"on_update_after_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail_on_update",
+		# "on_update_after_submit": "supertech.custom_script.sales_invoice.sales_invoice.sendmail_on_update",
 
 		
 	
@@ -155,19 +155,19 @@ scheduler_events = {
 	# 	# "supertech.supertech.script.sales.sendmail_function_before_one_day",
 	# 	"supertech.supertech.script.sales.sendmail_beforeoneday"
 	# ],
-	"hourly": [
-           "supertech.supertech.script.sales.sendmail",
-		   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
-		   "supertech.supertech.script.sales.sendmail_one_day_before_due_date",
-		   "supertech.supertech.script.sales.sendmail_after_ten",
-		   "supertech.supertech.script.sales.sendmail_after_twenty_five",
-		   "supertech.supertech.script.sales.sendmail_after_forty_five",
-		   "supertech.supertech.script.sales.sendmail_seventeen",
-		   "supertech.supertech.script.sales.sendmail_thirty_five",
-		   "supertech.supertech.script.sales.sendmail_fifty",
-		   "supertech.supertech.script.sales.sendmail_seventy",
-		   "supertech.supertech.script.sales.sendmail_ninety"
-	],
+	# "hourly": [
+    #        "supertech.supertech.script.sales.sendmail",
+	# 	   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
+	# 	   "supertech.supertech.script.sales.sendmail_one_day_before_due_date",
+	# 	   "supertech.supertech.script.sales.sendmail_after_ten",
+	# 	   "supertech.supertech.script.sales.sendmail_after_twenty_five",
+	# 	   "supertech.supertech.script.sales.sendmail_after_forty_five",
+	# 	   "supertech.supertech.script.sales.sendmail_seventeen",
+	# 	   "supertech.supertech.script.sales.sendmail_thirty_five",
+	# 	   "supertech.supertech.script.sales.sendmail_fifty",
+	# 	   "supertech.supertech.script.sales.sendmail_seventy",
+	# 	   "supertech.supertech.script.sales.sendmail_ninety"
+	# ],
 	# "weekly": [
 	# 	"supertech.tasks.weekly"
 	# ],
