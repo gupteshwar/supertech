@@ -11,6 +11,7 @@ def sendmail():
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
 
 
+
     sender_name = "Supertech Fabrics"
     director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
     alldoc = frappe.db.get_list("Sales Order",{'docstatus':1},['name', 'modified'] )
@@ -35,6 +36,7 @@ def sendmail():
             Supertech Fabrics
             '''
             all_cc = [ director,i_poc_email,account_head_email]
+
             contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
             for con in contact:
                 doc1 = frappe.get_doc("Contact", con.get('name'))
@@ -62,8 +64,9 @@ def sendmail():
             attachments = [frappe.attach_print("Sales Order", doc.name, print_format="Supertech Proforma Invoice", print_letterhead=True)]
                     
             )
+            l.clear()
 
-l1 = []
+
 @frappe.whitelist()
 def sendmail_after_eighteen_hrs():
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -89,21 +92,14 @@ def sendmail_after_eighteen_hrs():
              Supertech Fabrics
 
             '''
-            contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
-            for con in contact:
-                doc1 = frappe.get_doc("Contact", con.get('name'))
-                for j in doc1.links:
-                        if doc.customer == j.link_name:
-                                for e in doc1.email_ids:
-                                        b = e.email_id
-                                        l1.append(b)
+                                       
             sender = formataddr((sender_name, director))
             frappe.sendmail(
-            recipients =l1,
+            recipients =doc.contact_email,
             subject = " Many Thanks for your order !!",
             message = ms,
             sender = sender,
-            reference_doctype = "Sales Invoice",
+            reference_doctype = "Sales Order",
             reference_name	= doc.name,
             now =  True,
             expose_recipients = "header",
@@ -123,6 +119,7 @@ def sendmail_one_day_before_due_date():
     supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
 
 
+
     sender_name = "Supertech Fabrics"
     email_id = "stf@utssavgupta.com"
     bank = frappe.db.get_value("Terms and Conditions", "Supertech Bank Details", "terms")
@@ -135,7 +132,7 @@ def sendmail_one_day_before_due_date():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
 
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
@@ -192,6 +189,7 @@ def sendmail_one_day_before_due_date():
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
                     )
+                l2.clear()    
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -245,7 +243,8 @@ def sendmail_one_day_before_due_date():
                 is_notification = False,
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
-                    )                    
+                    )
+                l2.clear()                        
     
 #---------------------------------------------10 days after due date -----------------
             
@@ -266,7 +265,7 @@ def sendmail_after_ten():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -321,7 +320,8 @@ def sendmail_after_ten():
                 is_notification = False,
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
-                    )  
+                    )
+                l10.clear()      
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -375,7 +375,8 @@ def sendmail_after_ten():
                 is_notification = False,
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
-                    )                      
+                    )
+                l10.clear()                          
 
    
 
@@ -398,7 +399,7 @@ def sendmail_after_twenty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -454,6 +455,7 @@ def sendmail_after_twenty_five():
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
                     )
+                l25.clear()    
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -507,7 +509,8 @@ def sendmail_after_twenty_five():
                 is_notification = False,
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
-                    )                     
+                    )
+                l25.clear()                         
    
 #---------------------------------------------45 days after due date -----------------
             
@@ -528,7 +531,7 @@ def sendmail_after_forty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -583,6 +586,7 @@ def sendmail_after_forty_five():
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
                     )
+                l45.clear()    
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -635,7 +639,8 @@ def sendmail_after_forty_five():
                 is_notification = False,
                 attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
                     
-                    )                    
+                    )
+                l45.clear()                        
    
 
 
@@ -657,7 +662,7 @@ def sendmail_seventeen():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -665,8 +670,8 @@ def sendmail_seventeen():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 17 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 17 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -706,8 +711,8 @@ def sendmail_seventeen():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 17 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 17 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -758,7 +763,7 @@ def sendmail_thirty_five():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -766,8 +771,8 @@ def sendmail_thirty_five():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 35 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 35 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -807,8 +812,8 @@ def sendmail_thirty_five():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 35 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 35 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -860,7 +865,7 @@ def sendmail_fifty():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -868,8 +873,8 @@ def sendmail_fifty():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 50 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 50 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -909,8 +914,8 @@ def sendmail_fifty():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 50 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 50 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -963,7 +968,7 @@ def sendmail_seventy():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -971,8 +976,8 @@ def sendmail_seventy():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 70 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 70 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -1012,8 +1017,8 @@ def sendmail_seventy():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 70 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 70 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -1065,7 +1070,7 @@ def sendmail_ninety():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -1073,8 +1078,8 @@ def sendmail_ninety():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 90 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 90 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
@@ -1114,8 +1119,8 @@ def sendmail_ninety():
 
     <br><br>
 
-    The invoice shown below is due from {doc.customer_name} from last 90 days.<br>
-    Please contact the client and seek immediate payment.<br>
+    The invoice shown below is due from {doc.customer_name} from last 90 days.<br><br>
+    Please contact the client and seek immediate payment.<br><br>
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
