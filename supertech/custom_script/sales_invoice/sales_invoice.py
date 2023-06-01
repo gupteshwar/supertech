@@ -52,10 +52,11 @@ def sendmail1(doc, method):
         expose_recipients = "header",
         read_receipt = 0,
         is_notification = False,
-        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True)]
+        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech E - Invoice", print_letterhead=True)]
                 
                 
                 )
+        ls.clear()        
        
       
 #---------------------------------------------------------------------------------
@@ -69,63 +70,82 @@ def before_save(doc, method):
 #-------------------------------------------------------------------------------
 lu = []
 def sendmail_on_update(doc, method):
-        supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
-        sender_name = "Supertech Fabrics"
-        director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
-        plant_manager = "gaurang@supertechfabrics.com"
-        i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
-        account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
-        ms = f'''To<br>
-        {doc.customer_name}<br><br>
-        Dear Sir,<br>
-        Please find below the dispatch particulars against your order no:  {doc.po_no}
-        <br><br>
-        Invoice No : {doc.name}<br>
-        Invoice Date : { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
-        Invoice Amount : {doc.get_formatted("grand_total") }<br>
-        Transporter Name : {doc.transporter_name}<br>
-        L R No : {doc.lr_number} <br>
-        Freight Basis : {doc.local_freight} 
-        <br><br>
-        PFA enclosed LR Copy.
-        <br><br>
-        I request you to acknowledge this email as a confirmation when you receive your consignment. 
-        <br><br>
-        Once again, thank you for your business. We will look forward for your next order. 
-        <br><br>
-        Sincerely, <br>
-        Supertech Fabrics<br><br>
-        '''
+        if doc.send_email == 1 and doc.file:
+                supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
+                sender_name = "Supertech Fabrics"
+                director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
+                plant_manager = "gaurang@supertechfabrics.com"
+                i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+                account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+                ms = f'''To<br>
+                {doc.customer_name}<br><br>
+                Dear Sir,<br>
+                Please find below the dispatch particulars against your order no:  {doc.po_no}
+                <br><br>
+                Invoice No : {doc.name}<br>
+                Invoice Date : { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
+                Invoice Amount : {doc.get_formatted("grand_total") }<br>
+                Transporter Name : {doc.transporter_name}<br>
+                L R No : {doc.lr_number} <br>
+                Freight Basis : {doc.local_freight} 
+                <br><br>
+                PFA enclosed LR Copy.
+                <br><br>
+                I request you to acknowledge this email as a confirmation when you receive your consignment. 
+                <br><br>
+                Once again, thank you for your business. We will look forward for your next order. 
+                <br><br>
+                Sincerely, <br>
+                Supertech Fabrics<br><br>
+                '''
                 
-        all_cc = [ director, plant_manager, i_poc_email, account_head_email]
-              
-        contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
-        for con in contact:
-                doc1 = frappe.get_doc("Contact", con.get('name'))
-                for j in doc1.links:
-                        if doc.customer == j.link_name:
-                                for e in doc1.email_ids:
-                                        b = e.email_id
-                                        lu.append(b)
+                all_cc = [ director, plant_manager, i_poc_email, account_head_email]
+                
+                contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
+                for con in contact:
+                        doc1 = frappe.get_doc("Contact", con.get('name'))
+                        for j in doc1.links:
+                                if doc.customer == j.link_name:
+                                        for e in doc1.email_ids:
+                                                b = e.email_id
+                                                lu.append(b)
                                      
 
-        sender = formataddr((sender_name, supertech))
-        frappe.sendmail(
-        recipients =lu,
-        subject = "Dispatch details are here",
-        message = ms,
-        cc = all_cc,
-        sender = sender,
-        reference_doctype = "Sales Invoice",
-        reference_name	= doc.name,
-        now =  True,
-        expose_recipients = "header",
-        read_receipt = 0,
-        is_notification = False,
-        attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech Sales Invoice", print_letterhead=True), {"fid": doc.file}]
+                sender = formataddr((sender_name, supertech))
+                frappe.sendmail(
+                recipients =lu,
+                subject = "Dispatch details are here",
+                message = ms,
+                cc = all_cc,
+                sender = sender,
+                reference_doctype = "Sales Invoice",
+                reference_name	= doc.name,
+                now =  True,
+                expose_recipients = "header",
+                read_receipt = 0,
+                is_notification = False,
+                attachments = [frappe.attach_print("Sales Invoice", doc.name, print_format="Supertech E - Invoice", print_letterhead=True), {"fid": doc.file}]
+                        
+                        
+                )
+                lu.clear()
+
+
+
+
+
+#------------------------------------------------------------------------------
+      
+  
+           
+    
+                                     
+
+       
                 
                 
-        )     
+        
+
 
 
                                         

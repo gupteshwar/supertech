@@ -54,6 +54,7 @@ def payment_sendmail(doc, method):
                 
                 
                 )
+        lp.clear()        
 
 
                            
