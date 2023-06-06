@@ -28,19 +28,6 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Purchase Invoice",
-  "enabled": 1,
-  "modified": "2023-05-02 14:41:27.057681",
-  "name": "Purchase Invoice-Form",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "frappe.ui.form.on('Purchase Invoice', {\n\n\ton_submit(frm) {\n\t\t// your code here\n\t\tlet a = frm.doc.items\n\t\tfor (let i in a) {\n\t\t\tconst iterator = a[i];\n\t\t\t// console.log(iterator.item_code)\n\n\n\t\t\tlet processing_amount = 0\n\t\t\tfrappe.call({\n\t\t\t\tmethod: 'frappe.client.get_value',\n\t\t\t\targs: {\n\t\t\t\t\t'doctype': 'Item',\n\t\t\t\t\t'filters': {\n\t\t\t\t\t\t'name': iterator.item_code\n\t\t\t\t\t},\n\t\t\t\t\t'fieldname': ['processing_amount']\n\t\t\t\t},\n\t\t\t\tasync: false,\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tif (!r.exc) {\n\t\t\t\t\t\t// code snippet\n\t\t\t\t\t\tprocessing_amount = r.message.processing_amount\n\t\t\t\t\t\tconsole.log(r.message.processing_amount)\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\n\t\t\t// console.log(po_amount)\n\t\t\t// console.log(processing_amount)\n\n\t\t\tfrappe.db.set_value('Item', iterator.item_code, {\n\t\t\t\tpo_amount: iterator.rate,\n\t\t\t\ttrading_item_flp: iterator.rate + processing_amount\n\t\t\t}).then(r => {\n\t\t\t\tlet doc = r.message;\n\t\t\t\tconsole.log(doc);\n\t\t\t})\n\t\t}\n\n\n\n\t},\n\t onload(frm){\n        if(frm.doc.purchase_order) {\n            frappe.db.get_value('Purchase Order',{\"name\":frm.doc.purchase_order}, 'payment_terms_template', (r)=>{\n                \n                    frm.set_value('payment_terms_template', r.payment_terms_template)\n            })\n        }\n\t }\n            \n\n\n})",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
   "dt": "Pick List",
   "enabled": 0,
   "modified": "2022-11-16 13:03:23.414104",
@@ -93,19 +80,6 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Sales Invoice",
-  "enabled": 1,
-  "modified": "2023-05-02 13:27:31.669348",
-  "name": "Sales Invoice-Form",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "frappe.ui.form.on('Sales Invoice', {\n\trefresh(frm) {\n    // frm.doc.payment_terms_template =  \"20% Advance and balance 80% 60 days after the BL.\";\n\t}, \n\t onload(frm){\n        if(frm.doc.sales_order) {\n            frappe.db.get_value('Sales Order',{\"name\":frm.doc.sales_order}, 'payment_terms_template', (r)=>{\n                \n                    frm.set_value('payment_terms_template', r.payment_terms_template)\n            })\n        }\n\t }\n                 \n})\n\nfrappe.ui.form.on('Sales Invoice Item', \"item_code\", function(frm, cdt, cdn) {\n    // locals[cdt][cdn]['product']\n\n  \n\tvar ItemGroup = 0.00\n\tvar Item = 0.00\n\tvar Customer = 0.00\n\tvar TotalCost = 0.00\n\tvar RMC = 0.00\n\n\tvar Totalper = 0.00\n\tvar TotalValue = 0.00\n\n\n\t// getting percentage item\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Item',\n\t\t\t'filters': {\n\t\t\t\t'name': locals[cdt][cdn]['item_code']\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tItem = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item item_group\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Item Group',\n\t\t\t'filters': {\n\t\t\t\t'name': locals[cdt][cdn]['item_group']\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tItemGroup = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item Customer\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Customer',\n\t\t\t'filters': {\n\t\t\t\t'name': frm.doc.party_name\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tCustomer = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item Bom\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'BOM',\n\t\t\t'filters': {\n\t\t\t\t'item': locals[cdt][cdn]['item_code'],\n\t\t\t\t\"is_default\": 1\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'raw_material_cost',\n\t\t\t\t'total_cost',\n                'electricity_per_unit',\n                'total_overheads',\n                \"quantity\"\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.raw_material_cost) {\n\t\t\t\t\tRMC = r.message.raw_material_cost / r.message.quantity\n\t\t\t\t\tTotalCost = RMC + r.message.electricity_per_unit + r.message.total_overheads\n\n\t\t\t\t}else \n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\tfrappe.call({\n\t\t\t\t\t\t\t\t\t\t\tmethod: 'frappe.client.get_value',\n\t\t\t\t\t\t\t\t\t\t\targs: {\n\t\t\t\t\t\t\t\t\t\t\t\t'doctype': 'Item',\n\t\t\t\t\t\t\t\t\t\t\t\t'filters': {\n\t\t\t\t\t\t\t\t\t\t\t\t\t'name': locals[cdt][cdn]['item_code']\n\t\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\t\t'fieldname': [\n\t\t\t\t\t\t\t\t\t\t\t\t\t'trading_item_flp',\n\t\t\t\t\t\t\t\t\t\t\t\t\t'po_amount'\n\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\tasync: false,\n\t\t\t\t\t\t\t\t\t\t\tcallback: function(r) {\n\t\t\t\t\t\t\t\t\t\t\t\tif (!r.exc) {\n\t\t\t\t\t\t\t\t\t\t\t\t\t// code snippet\n\t\t\t\t\t\t\t\t\t\t\t\t\tif (r.message.trading_item_flp) {\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotalCost = r.message.trading_item_flp\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tRMC = r.message.po_amount\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t});\n\n\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t}\n\t\t}\n\t});\n\n\n\n\tif (isNaN(ItemGroup) == false && isNaN(Item) == false && isNaN(Customer) == false && isNaN(TotalCost) == false && isNaN(RMC) == false) {\n\t\tTotalper = ItemGroup + Item + Customer\n\n\t\tTotalValue = (Totalper * TotalCost) / 100\n\n\t\tlocals[cdt][cdn]['rmc_'] = RMC.toFixed(2);\n\t\tlocals[cdt][cdn]['flp_'] = TotalCost.toFixed(2);\n\t\tlocals[cdt][cdn]['ufp_'] = (TotalCost + TotalValue).toFixed(2);\n\n\n\n\t} else {\n\n\n\t}\n\n\n\n\n// \tconsole.log(`______________`)\n// \t// console.log(ItemGroup)\n// \tconsole.log(`ItemGroup : ${ItemGroup}  `)\n// \tconsole.log(`Item : ${Item}  `)\n// \tconsole.log(`Customer : ${Customer}  `)\n// \tconsole.log(`TotalCost : ${TotalCost}  `)\n// \tconsole.log(`RMC : ${RMC}  `)\n// \tconsole.log(`Totalper : ${Totalper}  `)\n// \tconsole.log(`TotalValue : ${TotalValue}  `)\n\n\n})",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
   "dt": "Delivery Note",
   "enabled": 1,
   "modified": "2023-03-06 15:27:00.931431",
@@ -153,6 +127,45 @@
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on('Customer', {\n\tonload(frm) {\n        frm.set_df_property(\"territory\", \"reqd\", 0);\n        frm.set_df_property(\"tax_category\", \"reqd\", 0);\n        }\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Invoice",
+  "enabled": 1,
+  "modified": "2023-05-02 14:41:27.057681",
+  "name": "Purchase Invoice-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Purchase Invoice', {\n\n\ton_submit(frm) {\n\t\t// your code here\n\t\tlet a = frm.doc.items\n\t\tfor (let i in a) {\n\t\t\tconst iterator = a[i];\n\t\t\t// console.log(iterator.item_code)\n\n\n\t\t\tlet processing_amount = 0\n\t\t\tfrappe.call({\n\t\t\t\tmethod: 'frappe.client.get_value',\n\t\t\t\targs: {\n\t\t\t\t\t'doctype': 'Item',\n\t\t\t\t\t'filters': {\n\t\t\t\t\t\t'name': iterator.item_code\n\t\t\t\t\t},\n\t\t\t\t\t'fieldname': ['processing_amount']\n\t\t\t\t},\n\t\t\t\tasync: false,\n\t\t\t\tcallback: function(r) {\n\t\t\t\t\tif (!r.exc) {\n\t\t\t\t\t\t// code snippet\n\t\t\t\t\t\tprocessing_amount = r.message.processing_amount\n\t\t\t\t\t\tconsole.log(r.message.processing_amount)\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\n\t\t\t// console.log(po_amount)\n\t\t\t// console.log(processing_amount)\n\n\t\t\tfrappe.db.set_value('Item', iterator.item_code, {\n\t\t\t\tpo_amount: iterator.rate,\n\t\t\t\ttrading_item_flp: iterator.rate + processing_amount\n\t\t\t}).then(r => {\n\t\t\t\tlet doc = r.message;\n\t\t\t\tconsole.log(doc);\n\t\t\t})\n\t\t}\n\n\n\n\t},\n\t onload(frm){\n        if(frm.doc.purchase_order) {\n            frappe.db.get_value('Purchase Order',{\"name\":frm.doc.purchase_order}, 'payment_terms_template', (r)=>{\n                \n                    frm.set_value('payment_terms_template', r.payment_terms_template)\n            })\n        }\n\t }\n            \n\n\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2023-05-02 13:27:31.669348",
+  "name": "Sales Invoice-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Sales Invoice', {\n\trefresh(frm) {\n    // frm.doc.payment_terms_template =  \"20% Advance and balance 80% 60 days after the BL.\";\n\t}, \n\t onload(frm){\n        if(frm.doc.sales_order) {\n            frappe.db.get_value('Sales Order',{\"name\":frm.doc.sales_order}, 'payment_terms_template', (r)=>{\n                \n                    frm.set_value('payment_terms_template', r.payment_terms_template)\n            })\n        }\n\t }\n                 \n})\n\nfrappe.ui.form.on('Sales Invoice Item', \"item_code\", function(frm, cdt, cdn) {\n    // locals[cdt][cdn]['product']\n\n  \n\tvar ItemGroup = 0.00\n\tvar Item = 0.00\n\tvar Customer = 0.00\n\tvar TotalCost = 0.00\n\tvar RMC = 0.00\n\n\tvar Totalper = 0.00\n\tvar TotalValue = 0.00\n\n\n\t// getting percentage item\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Item',\n\t\t\t'filters': {\n\t\t\t\t'name': locals[cdt][cdn]['item_code']\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tItem = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item item_group\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Item Group',\n\t\t\t'filters': {\n\t\t\t\t'name': locals[cdt][cdn]['item_group']\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tItemGroup = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item Customer\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'Customer',\n\t\t\t'filters': {\n\t\t\t\t'name': frm.doc.party_name\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'percentage',\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.percentage) {\n\t\t\t\t\tCustomer = r.message.percentage\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t});\n\n\t// getting percentage item Bom\n\tfrappe.call({\n\t\tmethod: 'frappe.client.get_value',\n\t\targs: {\n\t\t\t'doctype': 'BOM',\n\t\t\t'filters': {\n\t\t\t\t'item': locals[cdt][cdn]['item_code'],\n\t\t\t\t\"is_default\": 1\n\t\t\t},\n\t\t\t'fieldname': [\n\t\t\t\t'raw_material_cost',\n\t\t\t\t'total_cost',\n                'electricity_per_unit',\n                'total_overheads',\n                \"quantity\"\n\t\t\t]\n\t\t},\n\t\tasync: false,\n\t\tcallback: function(r) {\n\t\t\tif (!r.exc) {\n\t\t\t\t// code snippet\n\t\t\t\tif (r.message.raw_material_cost) {\n\t\t\t\t\tRMC = r.message.raw_material_cost / r.message.quantity\n\t\t\t\t\tTotalCost = RMC + r.message.electricity_per_unit + r.message.total_overheads\n\n\t\t\t\t}else \n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\tfrappe.call({\n\t\t\t\t\t\t\t\t\t\t\tmethod: 'frappe.client.get_value',\n\t\t\t\t\t\t\t\t\t\t\targs: {\n\t\t\t\t\t\t\t\t\t\t\t\t'doctype': 'Item',\n\t\t\t\t\t\t\t\t\t\t\t\t'filters': {\n\t\t\t\t\t\t\t\t\t\t\t\t\t'name': locals[cdt][cdn]['item_code']\n\t\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\t\t'fieldname': [\n\t\t\t\t\t\t\t\t\t\t\t\t\t'trading_item_flp',\n\t\t\t\t\t\t\t\t\t\t\t\t\t'po_amount'\n\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\tasync: false,\n\t\t\t\t\t\t\t\t\t\t\tcallback: function(r) {\n\t\t\t\t\t\t\t\t\t\t\t\tif (!r.exc) {\n\t\t\t\t\t\t\t\t\t\t\t\t\t// code snippet\n\t\t\t\t\t\t\t\t\t\t\t\t\tif (r.message.trading_item_flp) {\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tTotalCost = r.message.trading_item_flp\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tRMC = r.message.po_amount\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t});\n\n\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t}\n\t\t}\n\t});\n\n\n\n\tif (isNaN(ItemGroup) == false && isNaN(Item) == false && isNaN(Customer) == false && isNaN(TotalCost) == false && isNaN(RMC) == false) {\n\t\tTotalper = ItemGroup + Item + Customer\n\n\t\tTotalValue = (Totalper * TotalCost) / 100\n\n\t\tlocals[cdt][cdn]['rmc_'] = RMC.toFixed(2);\n\t\tlocals[cdt][cdn]['flp_'] = TotalCost.toFixed(2);\n\t\tlocals[cdt][cdn]['ufp_'] = (TotalCost + TotalValue).toFixed(2);\n\n\n\n\t} else {\n\n\n\t}\n\n\n\n\n// \tconsole.log(`______________`)\n// \t// console.log(ItemGroup)\n// \tconsole.log(`ItemGroup : ${ItemGroup}  `)\n// \tconsole.log(`Item : ${Item}  `)\n// \tconsole.log(`Customer : ${Customer}  `)\n// \tconsole.log(`TotalCost : ${TotalCost}  `)\n// \tconsole.log(`RMC : ${RMC}  `)\n// \tconsole.log(`Totalper : ${Totalper}  `)\n// \tconsole.log(`TotalValue : ${TotalValue}  `)\n\n\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Entry",
+  "enabled": 1,
+  "modified": "2023-06-06 13:34:03.437621",
+  "name": "Payment Entry-Form",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Payment Entry', {\n\trefresh(frm) {\n\n\t frm.doc.references.forEach(i=>{\n            frappe.db.get_value(\"Sales Invoice\", {\"name\": i.reference_name}, [\"rounded_total\"], (r)=>{\n              i.total_amount = r.rounded_total\n              frm.refresh_fields(\"references\");\n              \n          })\n\t     })\n      \n\t}\n})",
   "view": "Form"
  }
 ]
