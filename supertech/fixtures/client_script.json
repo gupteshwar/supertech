@@ -160,12 +160,12 @@
   "doctype": "Client Script",
   "dt": "Payment Entry",
   "enabled": 1,
-  "modified": "2023-06-06 13:34:03.437621",
+  "modified": "2023-06-12 16:00:07.587675",
   "name": "Payment Entry-Form",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('Payment Entry', {\n\trefresh(frm) {\n\n\t frm.doc.references.forEach(i=>{\n            frappe.db.get_value(\"Sales Invoice\", {\"name\": i.reference_name}, [\"rounded_total\"], (r)=>{\n              i.total_amount = r.rounded_total\n              frm.refresh_fields(\"references\");\n              \n          })\n\t     })\n      \n\t}\n})",
+  "script": "frappe.ui.form.on('Payment Entry', {\n\trefresh(frm) {\n\n\t frm.doc.references.forEach(i=>{\n\t     if (i.reference_doctype == \"Sales Invoice\"){\n            frappe.db.get_value(\"Sales Invoice\", {\"name\": i.reference_name}, [\"rounded_total\"], (r)=>{\n              i.total_amount = r.rounded_total\n              frm.refresh_fields(\"references\");\n              \n          })\n\t     }\n\t      if (i.reference_doctype == \"Sales Order\"){\n            frappe.db.get_value(\"Sales Order\", {\"name\": i.reference_name}, [\"rounded_total\"], (n)=>{\n              i.total_amount = n.rounded_total\n              frm.refresh_fields(\"references\");\n              \n          })\n\t     }\n\t     })\n      \n\t}\n})",
   "view": "Form"
  }
 ]
