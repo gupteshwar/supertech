@@ -125,6 +125,7 @@ doc_events = {
 		"on_submit": "supertech.custom_script.payment_entry.payment_entry.payment_sendmail",
 
 
+
 }
 
 
@@ -150,13 +151,9 @@ scheduler_events = {
 	# "all": [
 	# 	"supertech.tasks.all"
 	# ],
-	# "daily": [
-	# 	"supertech.supertech.script.sales.sendmail_afteroneda",
-	# 	"supertech.supertech.script.sales.sendmail_after",
-	# 	"supertech.supertech.script.sales.sendmail_function",
-	# 	# "supertech.supertech.script.sales.sendmail_function_before_one_day",
-	# 	"supertech.supertech.script.sales.sendmail_beforeoneday"
-	# ],
+	"daily": [
+		"supertech.custom_script.email_queue.email_queue.delete_email_queues",
+	],
 	"hourly": [
            "supertech.supertech.script.sales.sendmail",
 		   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
