@@ -151,9 +151,9 @@ scheduler_events = {
 	# "all": [
 	# 	"supertech.tasks.all"
 	# ],
-	"daily": [
-		"supertech.custom_script.email_queue.email_queue.delete_email_queues",
-	],
+	# "daily": [
+	# 	"supertech.custom_script.email_queue.email_queue.delete_email_queues",
+	# ],
 	"hourly": [
            "supertech.supertech.script.sales.sendmail",
 		   "supertech.supertech.script.sales.sendmail_after_eighteen_hrs",
@@ -165,7 +165,8 @@ scheduler_events = {
 		   "supertech.supertech.script.sales.sendmail_thirty_five",
 		   "supertech.supertech.script.sales.sendmail_fifty",
 		   "supertech.supertech.script.sales.sendmail_seventy",
-		   "supertech.supertech.script.sales.sendmail_ninety"
+		   "supertech.supertech.script.sales.sendmail_ninety",
+		   "supertech.custom_script.email_queue.email_queue.delete_email_queues",
 	],
 	# "weekly": [
 	# 	"supertech.tasks.weekly"
