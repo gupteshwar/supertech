@@ -170,7 +170,7 @@ scheduler_events = {
 	],
 	# "weekly": [
 	# 	"supertech.tasks.weekly"
-	# ],
+	# ],z
 	# "monthly": [
 	# 	"supertech.tasks.monthly"
 	# ]
