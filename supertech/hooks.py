@@ -11,7 +11,7 @@ app_license = "MIT"
 
 # Includes in <head>
 # ------------------
-fixtures = ['Custom Field','Notification','Client Script','Server Script','Webhook','Property Setter', 'Print Format', 'Role', 'Letter Head', 'Print Style', 'Print Settings',"Workflow","Workflow State","Workflow Action","Terms and Conditions", "Letter Head", ]
+fixtures = ['Custom Field','Client Script','Server Script','Webhook','Property Setter', 'Print Format', 'Role', 'Letter Head', 'Print Style', 'Print Settings',"Workflow","Workflow State","Workflow Action","Terms and Conditions", "Letter Head", ]
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/supertech/css/supertech.css"
