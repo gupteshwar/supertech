@@ -4,7 +4,7 @@ from datetime import datetime, date
 from email.utils import formataddr
 
 def delete_email_queues():
-    # '''method deletes email queues whose status is in Sent and/or Error'''
+    # '''method 111 deletes email queues whose status is in Sent and/or Error'''
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! weekday ---", frappe.utils.get_datetime().weekday() )
 
     #checking the day of the week, the script only works on monday, wednesday and friday
