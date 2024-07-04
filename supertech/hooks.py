@@ -161,6 +161,7 @@ scheduler_events = {
 		   "supertech.supertech.script.sales.sendmail_after_ten",
 		   "supertech.supertech.script.sales.sendmail_after_twenty_five",
 		   "supertech.supertech.script.sales.sendmail_after_forty_five",
+		   "supertech.supertech.script.sales.sendmail_after_sixty",
 		   "supertech.supertech.script.sales.sendmail_seventeen",
 		   "supertech.supertech.script.sales.sendmail_thirty_five",
 		   "supertech.supertech.script.sales.sendmail_fifty",

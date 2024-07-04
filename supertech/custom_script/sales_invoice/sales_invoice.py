@@ -9,7 +9,8 @@ def sendmail1(doc, method):
         supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
         sender_name = "Supertech Fabrics"
         director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
-        plant_manager = "gaurang@supertechfabrics.com"
+        plant_manager = "gaurang@utssavgupta.com"
+        rajeev = "rajeev@utssavgupta.com"
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         ms = f'''To<br>
@@ -29,7 +30,7 @@ def sendmail1(doc, method):
         Supertech Fabrics<br><br>
         '''
                 
-        all_cc = [ director, plant_manager, i_poc_email, account_head_email]
+        all_cc = [ director, plant_manager, i_poc_email, account_head_email, rajeev]
         contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
         for con in contact:
                 doc1 = frappe.get_doc("Contact", con.get('name'))
@@ -74,7 +75,8 @@ def sendmail_on_update(doc, method):
                 supertech = frappe.db.get_value("Email Account", "Supertech Fabrics", "email_id")
                 sender_name = "Supertech Fabrics"
                 director = frappe.db.get_value("Email Account", "Utssav Gupta | Director", "email_id")
-                plant_manager = "gaurang@supertechfabrics.com"
+                plant_manager = "gaurang@utssavgupta.com"
+                rajeev = "rajeev@utssavgupta.com"
                 i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
                 account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
                 ms = f'''To<br>
@@ -99,7 +101,7 @@ def sendmail_on_update(doc, method):
                 Supertech Fabrics<br><br>
                 '''
                 
-                all_cc = [ director, plant_manager, i_poc_email, account_head_email]
+                all_cc = [ director, plant_manager, i_poc_email, account_head_email, rajeev]
                 
                 contact = frappe.db.get_list("Contact",{'status':'Passive'},'name' )
                 for con in contact:
