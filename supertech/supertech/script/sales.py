@@ -661,29 +661,27 @@ def sendmail_after_sixty():
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 12 and doc.outstanding_amount > 0 and doc.send_email == 1:
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
-                ms = f'''To<br>
-    {doc.customer_name}<br><br>
+                ms = f'''
+    Re: {doc.customer_name}<br><br>
 
-    Dear Sir,<br>
-    Hope you are doing well!<br><br>
-    Gentle reminder, payment against invoice no {doc.name} is pending and is due by 60 days.<br><br>
+    Hi Rajeev,<br><br>
+    
+    The invoice shown below is due from {doc.company} from lasty 60 days.<br><br>
+    Request you to please check with iPoc or concerned person for the outstanding payment<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
     <br>
-    PO No. : {doc.po_no}<br>
     Invoice Amount: {doc.get_formatted("rounded_total") }<br>
     Due Amount: {doc.get_formatted("outstanding_amount") }<br>
     Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
     <br>
     <br>
-    We sincerely request you to kindly arrange for the transfer against the said invoice. Please find our Bank Details:<br>
-    {bank}
-    <br><br>
-    If you have processed this recently, then we request you to ignore the mail. <br><br><br>
+    If this has been processed recently, then we request you to share the payment advice with us.
+    <br><br><br>
     Sincerely,<br>
     Supertech Fabrics<br><br><br>
     
@@ -709,12 +707,13 @@ def sendmail_after_sixty():
                     )
             else:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
-                ms = f'''To<br>
-    {doc.customer_name}<br><br>
+                ms = f'''
+    Re: {doc.customer_name}<br><br>
 
-    Dear Sir,<br>
-    Hope you are doing well!<br><br>
-    Gentle reminder, payment against invoice no {doc.name} is pending and is due by 60 days.<br><br>
+    Hi Rajeev,<br><br>
+    
+    The invoice shown below is due from {doc.company} from lasty 60 days.<br><br>
+    Request you to please check with iPoc or concerned person for the outstanding payment<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
@@ -724,10 +723,8 @@ def sendmail_after_sixty():
     Due Date: { frappe.utils.formatdate(doc.due_date, "dd-mm-yyyy") }
     <br>
     <br>
-    We sincerely request you to kindly arrange for the transfer against the said invoice. Please find our Bank Details:<br>
-    {bank}
-    <br><br>
-    If you have processed this recently, then we request you to ignore the mail. <br><br><br>
+    If this has been processed recently, then we request you to share the payment advice with us.
+    <br><br><br>
     Sincerely,<br>
     Supertech Fabrics<br><br><br>
     
