@@ -276,7 +276,8 @@ class ReceivablePayableReport:
 		# set outstanding for all the accumulated balances
 		# as we can use this to filter out invoices without outstanding
 		for _key, row in self.voucher_balance.items():
-			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
+			outstanding_amt = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
+			row.outstanding = outstanding_amt if outstanding_amt > 0 else 0
 			row.outstanding_in_account_currency = flt(
 				row.invoiced_in_account_currency
 				- row.paid_in_account_currency
