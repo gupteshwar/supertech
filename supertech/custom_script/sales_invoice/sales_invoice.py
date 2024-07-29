@@ -18,6 +18,7 @@ def sendmail1(doc, method):
         Dear Sir,<br><br>
         Your order has been dispatched. Please find below the Invoice particulars against your order no:  {doc.po_no}
         <br><br>
+        PO Number : {doc.po_no}<br
         Invoice No : {doc.name}<br>
         Invoice Date : { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
         Invoice Amount : {doc.get_formatted("grand_total") }<br>
@@ -95,7 +96,7 @@ def sendmail_on_update(doc, method):
                 <br><br>
                 I request you to acknowledge this email as a confirmation when you receive your consignment. 
                 <br><br>
-                Once again, thank you for your business. We will look forward for your next order. 
+                Once again, thank you for your business. We look forward for your next order. 
                 <br><br>
                 Sincerely, <br>
                 Supertech Fabrics<br><br>

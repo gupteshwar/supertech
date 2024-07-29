@@ -31,7 +31,7 @@ def sendmail():
 
             ms = f'''Dear Sir,<br><br>
             Thank you for your order. <br>
-            This is to acknowledge you that we are processing your order. In case of a query, our team shall reach out soon. The dispatch date and details shall be notified soon.
+            This is to acknowledge you that we are processing your order. In case of a query, our technical department shall reach out to you. Dispatch date and details shall be notified soon.
             <br><br><br>
             Sincerely,<br>   
             Supertech Fabrics
@@ -83,8 +83,8 @@ def sendmail_after_eighteen_hrs():
         d = int(b)
         if b2 == a1 and d == 17:
             ms = f'''Dear Sir,<br><br>
-             I want to personally reach out and thank you for the order. We appreciate your business.<br><br>
-             Our company is very customer centric and will make your experience flawless. If at any moment you feel we can do something better or have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
+             I want to personally reach out and thank you for the order. We sincerely appreciate your business.<br><br>
+             Our company is very customer focused and will make your experience flawless. If at any moment you feel we can do something better or should you have any concerns, feel free to directly reach out to me on my number +91 9818699837 or email utssav@supertechfabrics.com . I shall be happy to help in any way possible. <br><br>
              Thank you once again!!
              <br><br>
              Sincerely,<br>
@@ -136,13 +136,13 @@ def sendmail_one_day_before_due_date():
         if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
 
             if doc.po_no:
-                ms1 = f'''Invoice No {doc.name} is OVERDUE'''
+                ms1 = f'''Invoice No {doc.name} is GOING TO BE DUE'''
                 ms = f'''To<br>
     {doc.customer_name}<br><br>
 
     Dear Sir,<br>
     Greetings from Supertech Fabrics, I hope this finds you well.<br>
-    We are writing for a gentle reminder that the invoice below is due for Tomorrow.<br><br>
+    We are writing for a gentle reminder that the invoice below is due for <b>Tomorrow</b>.<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
