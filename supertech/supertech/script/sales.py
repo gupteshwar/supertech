@@ -192,13 +192,13 @@ def sendmail_one_day_before_due_date():
                     )
                 l2.clear()    
             else:
-                ms1 = f'''Invoice No {doc.name} is OVERDUE'''
+                ms1 = f'''Invoice No {doc.name} is GOING TO BE DUE'''
                 ms = f'''To<br>
     {doc.customer_name}<br><br>
 
     Dear Sir,<br>
     Greetings from Supertech Fabrics, I hope this finds you well.<br>
-    We are writing for a gentle reminder that the invoice below is due for Tomorrow.<br><br>
+    We are writing for a gentle reminder that the invoice below is due for <b>Tomorrow</b>.<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
     Invoice Number: {doc.name}
