@@ -128,12 +128,13 @@ def sendmail_one_day_before_due_date():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=-1)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
 
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is GOING TO BE DUE'''
@@ -261,12 +262,13 @@ def sendmail_after_ten():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=10)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -395,12 +397,13 @@ def sendmail_after_twenty_five():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=25)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group =='B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -527,12 +530,13 @@ def sendmail_after_forty_five():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=45)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''To<br>
@@ -656,12 +660,13 @@ def sendmail_after_sixty():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         a = add_to_date(doc.due_date, days=60)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 12 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 12 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''
@@ -764,12 +769,13 @@ def sendmail_seventeen():
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=17)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -864,13 +870,14 @@ def sendmail_thirty_five():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=35)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -966,13 +973,14 @@ def sendmail_fifty():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=50)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -1070,12 +1078,13 @@ def sendmail_seventy():
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=70)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
@@ -1171,13 +1180,14 @@ def sendmail_ninety():
     for i in alldoc:
         doc = frappe.get_doc("Sales Invoice", i.get('name'))
         i_poc_email = frappe.db.get_value("Customer", doc.customer, "account_manager")
+        group = frappe.db.get_value("Customer", doc.customer, "custom_group")
         account_head_email = frappe.db.get_value("Customer", doc.customer, "account_head")
         account_head_name = frappe.db.get_value("Customer", doc.customer, "account_head_name")
         a = add_to_date(doc.due_date, days=90)
         b = now_datetime().date()
         c = str(now_datetime())[11:13]
         d = int(c)
-        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1:
+        if b == a and d == 16 and doc.outstanding_amount > 0 and doc.send_email == 1 and group == 'B':
             if doc.po_no:
                 ms1 = f'''Invoice No {doc.name} is OVERDUE'''
                 ms = f'''Re: {doc.customer_name}<br>
