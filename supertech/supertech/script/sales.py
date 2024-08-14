@@ -674,7 +674,7 @@ def sendmail_after_sixty():
 
     Hi Rajeev,<br><br>
     
-    The invoice shown below is due from {doc.company} from lasty 60 days.<br><br>
+    The invoice shown below is due from {doc.company} from last 60 days.<br><br>
     Request you to please check with iPoc or concerned person for the outstanding payment<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
@@ -717,7 +717,7 @@ def sendmail_after_sixty():
 
     Hi Rajeev,<br><br>
     
-    The invoice shown below is due from {doc.company} from lasty 60 days.<br><br>
+    The invoice shown below is due from {doc.company} from last 60 days.<br><br>
     Request you to please check with iPoc or concerned person for the outstanding payment<br><br>
     
     Invoice Date: { frappe.utils.formatdate(doc.posting_date, "dd-mm-yyyy") }<br>
