@@ -103,10 +103,10 @@
   "doctype": "Client Script",
   "dt": "Customer",
   "enabled": 1,
-  "modified": "2024-09-09 12:10:15.271132",
+  "modified": "2024-09-09 17:25:37.476307",
   "module": null,
   "name": "Customer-Form",
-  "script": "frappe.ui.form.on('Customer', {\n\tonload(frm) {\n        frm.set_df_property(\"territory\", \"reqd\", 0);\n        frm.set_df_property(\"tax_category\", \"reqd\", 0);\n        frm.set_df_property(\"customer_group\", \"reqd\", 1);\n        frm.set_df_property(\"gst_category\", \"reqd\", 1);\n        frm.set_df_property(\"customer_category\", \"reqd\", 1);\n        frm.set_df_property(\"account_head_name\", \"reqd\", 1);\n        frm.set_df_property(\"i_poc_name\", \"reqd\", 1);\n        frm.set_df_property(\"customer_type\", \"reqd\", 1);\n        frm.set_df_property(\"territory\", \"reqd\", 1);\n        frm.set_df_property(\"customer_name\", \"reqd\", 1);\n        frm.set_df_property(\"gstin\", \"reqd\", 1);\n        frm.set_df_property(\"account_head\", \"reqd\", 1);\n        frm.set_df_property(\"account_manager\", \"reqd\", 1);\n        frm.set_df_property(\"payment_terms\", \"reqd\", 1);\n        frm.set_df_property(\"sales_team\", \"reqd\", 1);\n        }\n})",
+  "script": "frappe.ui.form.on('Customer', {\n\tonload(frm) {\n        frm.set_df_property(\"territory\", \"reqd\", 0);\n        frm.set_df_property(\"tax_category\", \"reqd\", 0);\n        frm.set_df_property(\"customer_group\", \"reqd\", 1);\n        frm.set_df_property(\"gst_category\", \"reqd\", 1);\n        frm.set_df_property(\"customer_category\", \"reqd\", 1);\n        frm.set_df_property(\"account_head_name\", \"reqd\", 1);\n        frm.set_df_property(\"i_poc_name\", \"reqd\", 1);\n        frm.set_df_property(\"customer_type\", \"reqd\", 1);\n        frm.set_df_property(\"territory\", \"reqd\", 1);\n        frm.set_df_property(\"customer_name\", \"reqd\", 1);\n        frm.set_df_property(\"account_head\", \"reqd\", 1);\n        frm.set_df_property(\"account_manager\", \"reqd\", 1);\n        frm.set_df_property(\"payment_terms\", \"reqd\", 1);\n        frm.set_df_property(\"sales_team\", \"reqd\", 1);\n        }\n})",
   "view": "Form"
  },
  {
