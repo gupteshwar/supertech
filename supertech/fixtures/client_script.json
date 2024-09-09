@@ -103,10 +103,10 @@
   "doctype": "Client Script",
   "dt": "Customer",
   "enabled": 1,
-  "modified": "2023-04-05 12:43:13.218693",
+  "modified": "2024-09-09 12:10:15.271132",
   "module": null,
   "name": "Customer-Form",
-  "script": "frappe.ui.form.on('Customer', {\n\tonload(frm) {\n        frm.set_df_property(\"territory\", \"reqd\", 0);\n        frm.set_df_property(\"tax_category\", \"reqd\", 0);\n        }\n})",
+  "script": "frappe.ui.form.on('Customer', {\n\tonload(frm) {\n        frm.set_df_property(\"territory\", \"reqd\", 0);\n        frm.set_df_property(\"tax_category\", \"reqd\", 0);\n        frm.set_df_property(\"customer_group\", \"reqd\", 1);\n        frm.set_df_property(\"gst_category\", \"reqd\", 1);\n        frm.set_df_property(\"customer_category\", \"reqd\", 1);\n        frm.set_df_property(\"account_head_name\", \"reqd\", 1);\n        frm.set_df_property(\"i_poc_name\", \"reqd\", 1);\n        frm.set_df_property(\"customer_type\", \"reqd\", 1);\n        frm.set_df_property(\"territory\", \"reqd\", 1);\n        frm.set_df_property(\"customer_name\", \"reqd\", 1);\n        frm.set_df_property(\"gstin\", \"reqd\", 1);\n        frm.set_df_property(\"account_head\", \"reqd\", 1);\n        frm.set_df_property(\"account_manager\", \"reqd\", 1);\n        frm.set_df_property(\"payment_terms\", \"reqd\", 1);\n        frm.set_df_property(\"sales_team\", \"reqd\", 1);\n        }\n})",
   "view": "Form"
  },
  {
@@ -151,6 +151,28 @@
   "module": null,
   "name": "Stock Entry",
   "script": "frappe.ui.form.on('Stock Entry', {\n\trefresh(frm) {\n\t    //\n    }\n})\n\nfrappe.ui.form.on('Stock Entry Detail', {\n\titem_code: function(frm, cdt, cdn) {\n        var child = locals[cdt][cdn];\n        if (child.item_code) {\n            var branch = frm.doc.branch;\n            frappe.model.set_value(cdt, cdn, 'branch', branch);\n        }\n    },\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Address",
+  "enabled": 1,
+  "modified": "2024-09-09 11:55:13.201382",
+  "module": null,
+  "name": "Address",
+  "script": "frappe.ui.form.on('Address', {\n\tonload(frm) {\n\t\tfrm.set_df_property(\"address_line2\", \"reqd\", 1);\n\t\tfrm.set_df_property(\"state\", \"reqd\", 1);\n\t\tfrm.set_df_property(\"pincode\", \"reqd\", 1);\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Contact",
+  "enabled": 1,
+  "modified": "2024-09-09 11:57:51.618008",
+  "module": null,
+  "name": "Contact",
+  "script": "frappe.ui.form.on('Contact', {\n\tonload(frm) {\n\t\tfrm.set_df_property(\"designation\", \"reqd\", 1);\n\t\tfrm.set_df_property(\"email_ids\", \"reqd\", 1);\n\t\tfrm.set_df_property(\"phone_nos\", \"reqd\", 1);\n\t}\n})",
   "view": "Form"
  }
 ]
